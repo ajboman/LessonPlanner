@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { Configuration, OpenAIApi } from 'openai';
 
-const openAiKey = import.meta.env.OPEN_AI_LESSON_PLAN_KEY;
+const API_KEY = import.meta.env.OPEN_AI_KEY;
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -18,9 +17,7 @@ const Form = () => {
     standards: '',
   });
 
-  const [prompt, setPrompt] = useState("");
-  const [apiResponse, setApiResponse] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [prompt, setPrompt] = useState('');
 
   const handleChange = (event) => {
     setFormData({
@@ -30,52 +27,57 @@ const Form = () => {
   };
 
   const createString = (data) => {
-    let new_prompt = "Create a lesson plan that abides by the following requirements: "
+    let new_prompt = 'Create a lesson plan that abides by the following requirements: ';
 
     for (const item in data) {
       if (data[item]) {
-        new_prompt += item + ": " + data[item] + ", ";
+        new_prompt += item + ': ' + data[item] + ', ';
       }
     }
 
     if (new_prompt.endsWith(', ')) {
       new_prompt = new_prompt.slice(0, -2);
     }
+
     setPrompt(new_prompt);
+    console.log(prompt);
   };
 
+  const callOpenAIAPI = async () => {
+    console.log('Calling the OpenAI API');
+
+    const APIBody = {
+      model: 'text-davinci-003',
+      prompt: prompt,
+      temperature: 0,
+      max_tokens: 60,
+      top_p: 1.0,
+      frequency_penalty: 0.0,
+      presence_penalty: 0.0,
+    };
+
+    try {
+      const response = await fetch('https://api.openai.com/v1/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${API_KEY}`,
+        },
+        body: JSON.stringify(APIBody),
+      });
+
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     createString(formData);
-    setLoading(true);
-
-    const APIBody = {
-      "model": "text-davinci-003",
-      "prompt": "Say this is a test",
-      "max_tokens": 7,
-      "temperature": 0,
-      "top_p": 1.0,
-      "frequency_penalty": 0.0,
-      "presence_penalty": 0.0
-    }
-
-    await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer" + openAiKey,
-      },
-      body: JSON.stringify(APIBody)
-    }).then((data) => {
-      return data.json();
-    }).then((data) => {
-      console.log(data);
-    });
-
-    setLoading(false);
+    await callOpenAIAPI();
   };
-
 
   return (
     <section className='mt-16 w-full'>
