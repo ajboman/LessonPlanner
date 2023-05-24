@@ -1,12 +1,15 @@
 import { useState } from 'react';
+import { Configuration, OpenAIApi } from 'openai';
+
+const openAiKey = import.meta.env.OPEN_AI_LESSON_PLAN_KEY;
 
 const Form = () => {
   const [formData, setFormData] = useState({
     grade: '',
     subject: '',
-    learningObjectives: '',
     duration: '',
     classSize: '',
+    learningObjectives: '',
     resourcesAvailable: '',
     teachingStyle: '',
     assessmentMethods: '',
@@ -15,6 +18,16 @@ const Form = () => {
     standards: '',
   });
 
+  const configuration = new Configuration({
+    organization: "org-odXPuCrAF9KzTfR3PwoSVgOe",
+    apiKey: openAiKey,
+});
+
+  const openai = new OpenAIApi(configuration);
+  const [prompt, setPrompt] = useState("");
+  const [apiResponse, setApiResponse] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -22,10 +35,45 @@ const Form = () => {
     });
   };
 
-  const handleSubmit = (event) => {
+  const createString = (data) => {
+    let new_prompt = "Create a lesson plan that abides by the following requirements: "
+
+    for (const item in data) {
+      if (data[item]) {
+        new_prompt += item + ": " + data[item] + ", ";
+      }
+    }
+
+    if (new_prompt.endsWith(', ')) {
+      new_prompt = new_prompt.slice(0, -2);
+    }
+    setPrompt(new_prompt);
+  };
+
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Do something with the form data
-    console.log(formData);
+    createString(formData);
+    setLoading(true);
+    try {
+      const result = await openai.createCompletion({
+        model: "text-davinci-003",
+        prompt: "Say this is a test",
+        max_tokens: 7,
+        temperature: 0,
+        headers: {
+          Authorization: `Bearer ${openAiKey}`,
+        },
+      });
+      
+      console.log("response", result.data.choices[0].text);
+      setApiResponse(result.data.choices[0].text);
+    } catch (e) {
+      console.log(e);
+      setApiResponse("Something is going wrong, Please try again.");
+    }
+    setLoading(false);
+    console.log(apiResponse);
   };
 
   return (
@@ -135,7 +183,7 @@ const Form = () => {
             onChange={handleChange}
           />
         </label>
-        <button type="submit">Submit</button>
+        <button type="submit" className='mb-10'>Submit</button>
       </form>
     </section>
   );
