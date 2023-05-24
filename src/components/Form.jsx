@@ -18,12 +18,6 @@ const Form = () => {
     standards: '',
   });
 
-  const configuration = new Configuration({
-    organization: "org-odXPuCrAF9KzTfR3PwoSVgOe",
-    apiKey: openAiKey,
-});
-
-  const openai = new OpenAIApi(configuration);
   const [prompt, setPrompt] = useState("");
   const [apiResponse, setApiResponse] = useState("");
   const [loading, setLoading] = useState(false);
@@ -55,26 +49,33 @@ const Form = () => {
     event.preventDefault();
     createString(formData);
     setLoading(true);
-    try {
-      const result = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: "Say this is a test",
-        max_tokens: 7,
-        temperature: 0,
-        headers: {
-          Authorization: `Bearer ${openAiKey}`,
-        },
-      });
-      
-      console.log("response", result.data.choices[0].text);
-      setApiResponse(result.data.choices[0].text);
-    } catch (e) {
-      console.log(e);
-      setApiResponse("Something is going wrong, Please try again.");
+
+    const APIBody = {
+      "model": "text-davinci-003",
+      "prompt": "Say this is a test",
+      "max_tokens": 7,
+      "temperature": 0,
+      "top_p": 1.0,
+      "frequency_penalty": 0.0,
+      "presence_penalty": 0.0
     }
+
+    await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer" + openAiKey,
+      },
+      body: JSON.stringify(APIBody)
+    }).then((data) => {
+      return data.json();
+    }).then((data) => {
+      console.log(data);
+    });
+
     setLoading(false);
-    console.log(apiResponse);
   };
+
 
   return (
     <section className='mt-16 w-full'>
