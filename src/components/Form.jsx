@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import createOpenAICompletion from '../services/route';
 import Popup from './Popup';
+import loaderSvg from '../assets/loader.svg';
+
 
 const Form = ({ saveLesson }) => {
   const [formData, setFormData] = useState({
@@ -18,6 +20,7 @@ const Form = ({ saveLesson }) => {
   });
   const [showPopup, setShowPopup] = useState(false);
   const [apiResponse, setApiResponse] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
 
   const handleChange = (event) => {
@@ -48,6 +51,8 @@ const Form = ({ saveLesson }) => {
     event.preventDefault();
     const prompt = createString(formData);
     console.log(prompt);
+    setIsLoading(true);
+
     try {
       const response = await createOpenAICompletion(prompt);
       console.log(response);
@@ -56,6 +61,8 @@ const Form = ({ saveLesson }) => {
     } catch (error) {
       console.error("Error:", error);
     }
+    setIsLoading(false);
+
   };
 
   const handleSave = () => {
@@ -66,9 +73,11 @@ const Form = ({ saveLesson }) => {
   const closePopup = () => setShowPopup(false);
 
   return (
-    <section className='mt-16 w-full'>
-      <form className='relative flex flex-col justify-center gap-4'
-        onSubmit={handleSubmit}>
+    <section className="mt-16 w-full flex justify-center">
+      <form
+        className="relative flex flex-col gap-4"
+        onSubmit={handleSubmit}
+      >
         <label>
           Grade:
           <input
@@ -174,8 +183,14 @@ const Form = ({ saveLesson }) => {
         </label>
         <button type="submit" className='mb-10'>Submit</button>
       </form>
-      <Popup response={apiResponse} isVisible={showPopup} onClose={closePopup} onSave={handleSave} />
-
+      {showPopup && (
+        <Popup response={apiResponse} isVisible={showPopup} onClose={closePopup} onSave={handleSave} />
+      )}
+      {isLoading && (
+        <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-500 bg-opacity-75">
+          <img src={loaderSvg} alt="Loading" />
+        </div>
+      )}
     </section>
   );
 };

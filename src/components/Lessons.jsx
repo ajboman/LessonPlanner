@@ -7,24 +7,26 @@ const Lessons = ({ allLessons, onDeleteLesson }) => {
 
   return (
     <div>
-      <h1>Lessons</h1>
-      {allLessons.length === 0 ? (
-        <p>No lessons saved yet.</p>
-      ) : (
-        <ul>
-          {allLessons.map((lesson, index) => (
-            <li key={index}>
-              {lesson}
+      <h1 className="mb-4 text-xl font-bold">Lessons</h1>
+      <div className="grid grid-cols-3 gap-4">
+        {allLessons.length === 0 ? (
+          <p>No lessons saved yet.</p>
+        ) : (
+          allLessons.map((lesson, index) => (
+            <div key={index} className="p-4 border border-gray-300 rounded relative overflow-y-auto max-h-96">
               <button
                 onClick={() => handleDeleteLesson(index)}
-                className="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                className="absolute top-2 right-2 bg-transparent hover:bg-red-500 text-red-500 hover:text-white font-bold py-1 px-2 rounded"
               >
-                Delete
+                <span className="text-lg">✕</span>
               </button>
-            </li>
-          ))}
-        </ul>
-      )}
+              <p className="pl-2 whitespace-pre-wrap">
+                {lesson.startsWith('\n\n') ? lesson.substring(2) : lesson}
+              </p>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 };

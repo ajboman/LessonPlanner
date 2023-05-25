@@ -6,14 +6,18 @@ const Navbar = () => {
             <nav className='flex justify-between items-center w-full mb-10 pt-3'>
                 <div className="text-2xl text-black">Lesson Planner</div>
                 <div>
-                    <Link to="/plan" className='mr-4 text-black'>Plan</Link>
-                    <Link to="/lessons" className='text-black'>Lessons</Link>
+                    <button className="link-button">
+                        <Link to="/plan" className='text-white'>Plan</Link>
+                    </button>
+                    <button className="link-button">
+                        <Link to="/lessons" className='text-white'>Lessons</Link>
+                    </button>
                 </div>
                 <button
                     type='button'
-                    onClick={() =>
-                        window.open('https://github.com/ajboman/LessonPlanner')}
-                    className='black_btn'>
+                    onClick={() => window.open('https://github.com/ajboman/LessonPlanner')}
+                    className='black_btn'
+                >
                     GitHub
                 </button>
             </nav>

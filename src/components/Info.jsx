@@ -7,7 +7,9 @@ const Info = () => {
         Plan Lessons Quick and Easy
       </h1>
       <h2 className='desc'>
-        Make the lesson plan specified by providing more details.
+        Provide as many details as you need. <br />
+        More details will result in a more precise plan. <br />
+        Save the Lesson Plan to view it in the Lessons page.
       </h2>
     </header>
 
