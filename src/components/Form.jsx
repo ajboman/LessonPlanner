@@ -1,6 +1,5 @@
 import { useState } from 'react';
-
-const API_KEY = import.meta.env.OPEN_AI_KEY;
+import createOpenAICompletion from '../services/route';
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -43,40 +42,19 @@ const Form = () => {
     console.log(prompt);
   };
 
-  const callOpenAIAPI = async () => {
-    console.log('Calling the OpenAI API');
-
-    const APIBody = {
-      model: 'text-davinci-003',
-      prompt: prompt,
-      temperature: 0,
-      max_tokens: 60,
-      top_p: 1.0,
-      frequency_penalty: 0.0,
-      presence_penalty: 0.0,
-    };
-
-    try {
-      const response = await fetch('https://api.openai.com/v1/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${API_KEY}`,
-        },
-        body: JSON.stringify(APIBody),
-      });
-
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     createString(formData);
-    await callOpenAIAPI();
+    try {
+      const prompt = "Say this is a test";
+      const response = await createOpenAICompletion(prompt);
+      console.log(response);
+      // Handle the response or perform further operations here
+    } catch (error) {
+      console.error("Error:", error);
+      // Handle the error appropriately
+    }
   };
 
   return (
