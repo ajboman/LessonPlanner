@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import createOpenAICompletion from '../services/route';
+import Popup from './Popup';
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -15,8 +16,10 @@ const Form = () => {
     studentNeeds: '',
     extraOptions: '',
   });
-
   const [prompt, setPrompt] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
+  const [apiResponse, setApiResponse] = useState('');
+
 
   const handleChange = (event) => {
     setFormData({
@@ -47,15 +50,16 @@ const Form = () => {
     event.preventDefault();
     createString(formData);
     try {
-      const prompt = "Say this is a test";
       const response = await createOpenAICompletion(prompt);
-      console.log(response.data.choices[0].text);
-      // Handle the response or perform further operations here
+      console.log(response);
+      setApiResponse(response.data.choices[0].text);
+      setShowPopup(true);
     } catch (error) {
       console.error("Error:", error);
-      // Handle the error appropriately
     }
   };
+
+  const closePopup = () => setShowPopup(false);
 
   return (
     <section className='mt-16 w-full'>
@@ -166,6 +170,8 @@ const Form = () => {
         </label>
         <button type="submit" className='mb-10'>Submit</button>
       </form>
+      <Popup response={apiResponse} isVisible={showPopup} onClose={closePopup} />
+
     </section>
   );
 };
