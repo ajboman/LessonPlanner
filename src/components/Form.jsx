@@ -2,7 +2,7 @@ import { useState } from 'react';
 import createOpenAICompletion from '../services/route';
 import Popup from './Popup';
 
-const Form = () => {
+const Form = ({ saveLesson }) => {
   const [formData, setFormData] = useState({
     grade: '',
     subject: '',
@@ -16,7 +16,6 @@ const Form = () => {
     studentNeeds: '',
     extraOptions: '',
   });
-  const [prompt, setPrompt] = useState('');
   const [showPopup, setShowPopup] = useState(false);
   const [apiResponse, setApiResponse] = useState('');
 
@@ -29,7 +28,7 @@ const Form = () => {
   };
 
   const createString = (data) => {
-    let new_prompt = 'Create a lesson plan that abides by the following requirements: ';
+    let new_prompt = 'Create a lesson plan that is as brief as possible and abides by the following requirements: ';
 
     for (const item in data) {
       if (data[item]) {
@@ -41,14 +40,14 @@ const Form = () => {
       new_prompt = new_prompt.slice(0, -2);
     }
 
-    setPrompt(new_prompt);
-    console.log(prompt);
+    return new_prompt;
   };
 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    createString(formData);
+    const prompt = createString(formData);
+    console.log(prompt);
     try {
       const response = await createOpenAICompletion(prompt);
       console.log(response);
@@ -57,6 +56,11 @@ const Form = () => {
     } catch (error) {
       console.error("Error:", error);
     }
+  };
+
+  const handleSave = () => {
+    saveLesson(apiResponse);
+    closePopup();
   };
 
   const closePopup = () => setShowPopup(false);
@@ -170,7 +174,7 @@ const Form = () => {
         </label>
         <button type="submit" className='mb-10'>Submit</button>
       </form>
-      <Popup response={apiResponse} isVisible={showPopup} onClose={closePopup} />
+      <Popup response={apiResponse} isVisible={showPopup} onClose={closePopup} onSave={handleSave} />
 
     </section>
   );
