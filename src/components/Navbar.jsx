@@ -1,9 +1,14 @@
+import { Link } from 'react-router-dom';
+
 const Navbar = () => {
     return (
-        <header className="w-full flex justify-center items-center flex-col">
+        <header className="w-full flex justify-center items-center flex-col p-5">
             <nav className='flex justify-between items-center w-full mb-10 pt-3'>
-                <div>Lesson Planner</div>
-                {/* can put image logo above here */}
+                <div className="text-2xl text-black">Lesson Planner</div>
+                <div>
+                    <Link to="/plan" className='mr-4 text-black'>Plan</Link>
+                    <Link to="/lessons" className='text-black'>Lessons</Link>
+                </div>
                 <button
                     type='button'
                     onClick={() =>
@@ -16,4 +21,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar
+export default Navbar;

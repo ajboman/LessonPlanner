@@ -13,7 +13,7 @@ const Form = () => {
     assessmentMethods: '',
     priorKnowledge: '',
     studentNeeds: '',
-    standards: '',
+    extraOptions: '',
   });
 
   const [prompt, setPrompt] = useState('');
@@ -49,7 +49,7 @@ const Form = () => {
     try {
       const prompt = "Say this is a test";
       const response = await createOpenAICompletion(prompt);
-      console.log(response);
+      console.log(response.data.choices[0].text);
       // Handle the response or perform further operations here
     } catch (error) {
       console.error("Error:", error);
@@ -156,10 +156,10 @@ const Form = () => {
           />
         </label>
         <label>
-          Standards:
+          Extra Options:
           <textarea
-            name='standards'
-            placeholder='This lesson aligns with Common Core Standards for 9th Grade English'
+            name='extraOptions'
+            placeholder='If something does not fit in the above categories put it here.'
             value={formData.standards}
             onChange={handleChange}
           />

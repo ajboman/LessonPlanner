@@ -1,24 +1,26 @@
-import React from 'react'
-import Navbar from './components/Navbar'
-import Info from './components/Info'
-import Form from './components/Form'
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import './App.css'
+import Navbar from './components/Navbar';
+import Info from './components/Info';
+import Form from './components/Form';
+import Lessons from './components/Lessons';
+
+import './App.css';
 
 const App = () => {
     return (
-        <main>
-            <div className='main'>
-                {/* background */}
-            </div>
-
-            <div className='app'>
+        <Router>
+            <main>
+                <div className='main' />
                 <Navbar />
-                <Info />
-                <Form />
-            </div>
-        </main>
-    )
+                <Routes>
+                    <Route path="/plan" element={<><Info /><Form /></>} />
+                    <Route path="/lessons" element={<Lessons />} />
+                </Routes>
+            </main>
+        </Router>
+    );
 }
 
-export default App
+export default App;
