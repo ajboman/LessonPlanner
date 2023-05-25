@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
 import Info from './components/Info';
@@ -7,6 +7,15 @@ import Form from './components/Form';
 import Lessons from './components/Lessons';
 
 import './App.css';
+
+const RedirectToPlan = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate('/plan');
+  }, [navigate]);
+
+  return null;
+}
 
 const App = () => {
   const [allLessons, setAllLessons] = useState([]);
@@ -38,6 +47,7 @@ const App = () => {
         <div className='main' />
         <Navbar />
         <Routes>
+          <Route path="/" element={<RedirectToPlan />} />
           <Route path="/plan" element={<><Info /><Form saveLesson={saveLesson} /></>} />
           <Route path="/lessons" element={<Lessons allLessons={allLessons} onDeleteLesson={deleteLesson} />} />
         </Routes>
