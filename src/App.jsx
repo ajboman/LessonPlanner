@@ -31,6 +31,12 @@ const App = () => {
     localStorage.setItem('lessons', JSON.stringify(updatedLessons));
   };
 
+  useEffect(() => {
+    if (window.location.pathname === '/') {
+      window.location.pathname = '/plan';
+    }
+  }, []);
+
   return (
     <Router>
       <main>
