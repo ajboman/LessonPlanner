@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
 import Info from './components/Info';
@@ -9,7 +9,14 @@ import Lessons from './components/Lessons';
 import './App.css';
 
 const App = () => {
-  const [allLessons, setAllLessons] = useState(JSON.parse(localStorage.getItem('lessons')) || []);
+  const [allLessons, setAllLessons] = useState([]);
+
+  useEffect(() => {
+    const storedLessons = JSON.parse(localStorage.getItem('lessons'));
+    if (storedLessons) {
+      setAllLessons(storedLessons);
+    }
+  }, []);
 
   const saveLesson = (lesson) => {
     const newLessons = [...allLessons, lesson];
@@ -17,11 +24,12 @@ const App = () => {
     localStorage.setItem('lessons', JSON.stringify(newLessons));
   };
 
-  useEffect(() => {
-    if (window.location.pathname === '/') {
-      window.location.pathname = '/plan';
-    }
-  }, []);
+  const deleteLesson = (index) => {
+    const updatedLessons = [...allLessons];
+    updatedLessons.splice(index, 1);
+    setAllLessons(updatedLessons);
+    localStorage.setItem('lessons', JSON.stringify(updatedLessons));
+  };
 
   return (
     <Router>
@@ -30,7 +38,7 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/plan" element={<><Info /><Form saveLesson={saveLesson} /></>} />
-          <Route path="/lessons" element={<Lessons allLessons={allLessons} />} />
+          <Route path="/lessons" element={<Lessons allLessons={allLessons} onDeleteLesson={deleteLesson} />} />
         </Routes>
       </main>
     </Router>
