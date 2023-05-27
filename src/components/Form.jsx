@@ -56,7 +56,7 @@ const Form = ({ saveLesson }) => {
     try {
       const response = await createOpenAICompletion(prompt);
       console.log(response);
-      setApiResponse(response.data.choices[0].text);
+      setApiResponse(response.text);
       setShowPopup(true);
     } catch (error) {
       console.error("Error:", error);
