@@ -17,6 +17,7 @@ const Lessons = ({ allLessons, onDeleteLesson }) => {
               <button
                 onClick={() => handleDeleteLesson(index)}
                 className="absolute top-2 right-2 bg-transparent hover:bg-red-500 text-red-500 hover:text-white font-bold py-1 px-2 rounded"
+                aria-label={`Delete lesson ${index}`}
               >
                 <span className="text-lg">✕</span>
               </button>
