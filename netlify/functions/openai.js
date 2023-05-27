@@ -16,14 +16,14 @@ exports.handler = async function(event, context) {
     const response = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: prompt,
-      max_tokens: 200,
+      max_tokens: 300,
       temperature: 0,
     });
 
     // Return the data as the serverless function response
     return {
       statusCode: 200,
-      body: JSON.stringify(response.data),
+      body: JSON.stringify(response.data.choices[0]),
     }
   } catch (error) {
     return { statusCode: 500, body: error.toString() };
