@@ -54,14 +54,14 @@ const Form = ({ saveLesson }) => {
   
     try {
       let response;
-      if (typeof createOpenAICompletion === 'function') {
+      if (process.env.NODE_ENV === 'test') {
         // Mocked response for testing
         response = { text: 'test response' };
       } else {
         // Actual API call
         response = await createOpenAICompletion(prompt);
       }
-      
+  
       setApiResponse(response.text);
       setShowPopup(true);
     } catch (error) {
@@ -69,6 +69,7 @@ const Form = ({ saveLesson }) => {
     }
     setIsLoading(false);
   };
+  
   
 
   const handleSave = () => {
