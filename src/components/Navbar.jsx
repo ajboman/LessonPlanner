@@ -6,7 +6,7 @@ const Navbar = () => {
         <header className="w-full flex justify-center items-center flex-col p-5">
             <nav className='flex justify-between items-center w-full mb-10 pt-3'>
                 <div className="text-2xl text-black">Lesson Planner</div>
-                <div>
+                <div className="link-buttons-container"> {/* Added container div */}
                     <Button className="link-button">
                         <Link to="/plan" className='text-white'>Plan</Link>
                     </Button>
