@@ -2,7 +2,7 @@ import { Modal, Button } from 'flowbite-react';
 
 const Popup = ({ response, isVisible, onClose, onSave }) => {
     return (
-        <Modal onClose={onClose} popup show={isVisible} size="md">
+        <Modal onClose={onClose} popup show={isVisible} size="md" color='gray'>
             <Modal.Header />
             <Modal.Body>
                 <div className="text-center">
