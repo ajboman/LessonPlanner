@@ -97,7 +97,7 @@ input[type="text"] {
   @apply p-2 w-full h-full box-border bg-gray-300 placeholder-gray-500;
 }
 
-textarea {
+.textarea {
   @apply p-2 w-full h-24 box-border mb-5 resize-y bg-gray-300 placeholder-gray-500;
 }
 

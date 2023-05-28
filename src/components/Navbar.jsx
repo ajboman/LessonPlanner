@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Button } from 'flowbite-react';
 
 const Navbar = () => {
     return (
@@ -6,20 +7,20 @@ const Navbar = () => {
             <nav className='flex justify-between items-center w-full mb-10 pt-3'>
                 <div className="text-2xl text-black">Lesson Planner</div>
                 <div>
-                    <button className="link-button">
+                    <Button className="link-button">
                         <Link to="/plan" className='text-white'>Plan</Link>
-                    </button>
-                    <button className="link-button">
+                    </Button>
+                    <Button className="link-button">
                         <Link to="/lessons" className='text-white'>Lessons</Link>
-                    </button>
+                    </Button>
                 </div>
-                <button
+                <Button
                     type='button'
                     onClick={() => window.open('https://github.com/ajboman/LessonPlanner')}
                     className='black_btn'
                 >
                     GitHub
-                </button>
+                </Button>
             </nav>
         </header>
     )
