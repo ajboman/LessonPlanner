@@ -8,96 +8,187 @@ exports[`Form component renders correctly 1`] = `
     <form
       class="relative flex flex-col gap-4"
     >
-      <label>
-        Grade:
-        <input
-          name="grade"
-          placeholder="9th Grade"
-          type="text"
-          value=""
-        />
+      <label
+        class="text-sm font-medium text-gray-900 dark:text-gray-300"
+        data-testid="flowbite-label"
+      >
+        Grade
+        :
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 rounded-lg p-2.5 text-sm"
+              name="grade"
+              placeholder="9th Grade"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
       </label>
-      <label>
-        Subject:
-        <input
-          name="subject"
-          placeholder="Language Arts"
-          type="text"
-          value=""
-        />
+      <label
+        class="text-sm font-medium text-gray-900 dark:text-gray-300"
+        data-testid="flowbite-label"
+      >
+        Subject
+        :
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 rounded-lg p-2.5 text-sm"
+              name="subject"
+              placeholder="Language Arts"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
       </label>
-      <label>
-        Duration:
-        <input
-          name="duration"
-          placeholder="50 minutes"
-          type="text"
-          value=""
-        />
+      <label
+        class="text-sm font-medium text-gray-900 dark:text-gray-300"
+        data-testid="flowbite-label"
+      >
+        Duration
+        :
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 rounded-lg p-2.5 text-sm"
+              name="duration"
+              placeholder="50 minutes"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
       </label>
-      <label>
-        Class Size:
-        <input
-          name="classSize"
-          placeholder="30"
-          type="text"
-          value=""
-        />
+      <label
+        class="text-sm font-medium text-gray-900 dark:text-gray-300"
+        data-testid="flowbite-label"
+      >
+        ClassSize
+        :
+        <div
+          class="flex"
+        >
+          <div
+            class="relative w-full"
+          >
+            <input
+              class="block w-full border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 rounded-lg p-2.5 text-sm"
+              name="classSize"
+              placeholder="30"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
       </label>
-      <label>
-        Learning Objectives:
+      <label
+        class="text-sm font-medium text-gray-900 dark:text-gray-300"
+        data-testid="flowbite-label"
+      >
+        LearningObjectives
+        :
         <textarea
+          class="block w-full rounded-lg border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 textarea"
           name="learningObjectives"
           placeholder="Students should be able to identify and explain the use of at least three literary devices"
         />
       </label>
-      <label>
-        Resources Available:
+      <label
+        class="text-sm font-medium text-gray-900 dark:text-gray-300"
+        data-testid="flowbite-label"
+      >
+        ResourcesAvailable
+        :
         <textarea
+          class="block w-full rounded-lg border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 textarea"
           name="resourcesAvailable"
           placeholder=""To Kill a Mockingbird" novels, digital whiteboard for presenting a PowerPoint on literary devices, computers with internet access for research."
         />
       </label>
-      <label>
-        Teaching Style:
+      <label
+        class="text-sm font-medium text-gray-900 dark:text-gray-300"
+        data-testid="flowbite-label"
+      >
+        TeachingStyle
+        :
         <textarea
+          class="block w-full rounded-lg border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 textarea"
           name="teachingStyle"
           placeholder="Lecture, Group discussions, Individual work"
         />
       </label>
-      <label>
-        Assessment Methods:
+      <label
+        class="text-sm font-medium text-gray-900 dark:text-gray-300"
+        data-testid="flowbite-label"
+      >
+        AssessmentMethods
+        :
         <textarea
+          class="block w-full rounded-lg border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 textarea"
           name="assessmentMethods"
           placeholder="Completion of the literary device worksheet"
         />
       </label>
-      <label>
-        Prior Knowledge:
+      <label
+        class="text-sm font-medium text-gray-900 dark:text-gray-300"
+        data-testid="flowbite-label"
+      >
+        PriorKnowledge
+        :
         <textarea
+          class="block w-full rounded-lg border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 textarea"
           name="priorKnowledge"
           placeholder="Students have learned about various literary devices"
         />
       </label>
-      <label>
-        Student Needs:
+      <label
+        class="text-sm font-medium text-gray-900 dark:text-gray-300"
+        data-testid="flowbite-label"
+      >
+        StudentNeeds
+        :
         <textarea
+          class="block w-full rounded-lg border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 textarea"
           name="studentNeeds"
           placeholder="For students who may struggle with the pace, provide a reference sheet of literary devices. For English Language Learners or students with special needs, provide extra support as needed, such as a translated version of the text or additional time to complete the worksheet. For advanced students, include more complex literary devices in their assigned passages."
         />
       </label>
-      <label>
-        Extra Options:
+      <label
+        class="text-sm font-medium text-gray-900 dark:text-gray-300"
+        data-testid="flowbite-label"
+      >
+        ExtraOptions
+        :
         <textarea
+          class="block w-full rounded-lg border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 textarea"
           name="extraOptions"
           placeholder="If something does not fit in the above categories put it here."
         />
       </label>
       <button
-        class="mb-10"
+        class="text-white bg-cyan-700 border border-transparent hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-300 disabled:hover:bg-cyan-700 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800 dark:disabled:hover:bg-cyan-600 focus:!ring-2 group flex h-min items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-lg mb-10 bg-black"
         type="submit"
       >
-        Submit
+        <span
+          class="flex items-center rounded-md text-sm px-4 py-2"
+        >
+          Submit
+        </span>
       </button>
     </form>
   </section>
