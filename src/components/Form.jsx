@@ -95,7 +95,7 @@ const Form = ({ saveLesson }) => {
 
   const closePopup = () => setShowPopup(false);
   return (
-    <section className="mt-16 w-full flex justify-center">
+    <section className="mt-16 w-full flex justify-center items-center">
       <form
         className="relative flex flex-col gap-4"
         onSubmit={handleSubmit}
