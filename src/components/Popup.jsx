@@ -2,9 +2,9 @@ import { Modal, Button } from 'flowbite-react';
 
 const Popup = ({ response, isVisible, onClose, onSave }) => {
     return (
-        <Modal onClose={onClose} popup visible={isVisible} size="md">
+        <Modal onClose={onClose} popup visible={isVisible} size="md" style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
             <Modal.Header />
-            <Modal.Body>
+            <Modal.Body style={{backgroundColor: 'gray'}}>
                 <div className="text-center">
                     <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
                         API Response
