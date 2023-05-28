@@ -94,34 +94,37 @@ const Form = ({ saveLesson }) => {
   };
 
   const closePopup = () => setShowPopup(false);
-  return (
+   return (
     <section className="mt-16 w-full flex justify-center items-center">
-      <form
-        className="relative flex flex-col gap-4"
-        onSubmit={handleSubmit}
-      >
-        {formFields.map(field => (
-          <FormInput 
-            key={field.name}
-            name={field.name}
-            placeholder={field.placeholder}
-            type={field.type}
-            value={formData[field.name] || ''}
-            onChange={handleChange}
-          />
-        ))}
-        <Button type="submit" className='mb-10 bg-black'>Submit</Button>
-      </form>
-      {showPopup && (
-        <Popup response={apiResponse} isVisible={showPopup} onClose={closePopup} onSave={handleSave} />
-      )}
-      {isLoading && (
-        <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-500 bg-opacity-75">
-          <img src={loaderSvg} alt="Loading" />
-        </div>
-      )}
+      <div className="popup-container">
+        <form
+          className="relative flex flex-col gap-4"
+          onSubmit={handleSubmit}
+        >
+          {formFields.map(field => (
+            <FormInput 
+              key={field.name}
+              name={field.name}
+              placeholder={field.placeholder}
+              type={field.type}
+              value={formData[field.name] || ''}
+              onChange={handleChange}
+            />
+          ))}
+          <Button type="submit" className='mb-10 bg-black'>Submit</Button>
+        </form>
+        {showPopup && (
+          <Popup response={apiResponse} isVisible={showPopup} onClose={closePopup} onSave={handleSave} />
+        )}
+        {isLoading && (
+          <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-500 bg-opacity-75">
+            <img src={loaderSvg} alt="Loading" />
+          </div>
+        )}
+      </div>
     </section>
   );
 };
+
 
 export default Form;
