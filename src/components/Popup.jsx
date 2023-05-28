@@ -2,14 +2,14 @@ import { Modal, Button } from 'flowbite-react';
 
 const Popup = ({ response, isVisible, onClose, onSave }) => {
     return (
-        <Modal onClose={onClose} popup visible={isVisible} size="md" style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
+        <Modal onClose={onClose} popup visible={isVisible} size="md">
             <Modal.Header />
-            <Modal.Body style={{backgroundColor: 'gray'}}>
+            <Modal.Body>
                 <div className="text-center">
-                    <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                        API Response
+                    <h3 className="mb-5 text-lg font-normal text-black dark:text-gray-400">
+                        Lesson Plan
                     </h3>
-                    <p className='text-sm text-gray-500 whitespace-pre-wrap'>
+                    <p className='text-sm text-black whitespace-pre-wrap'>
                         {response}
                     </p>
                     <div className="flex justify-center gap-4 mt-5">
