@@ -8,13 +8,12 @@ jest.mock('../services/route', () => ({
 }));
 
 const mockSaveLesson = jest.fn();
-const mockDeleteLesson = jest.fn();
 
 describe('Form component', () => {
   let component;
 
   beforeEach(() => {
-    component = render(<Form saveLesson={mockSaveLesson} deleteLesson={mockDeleteLesson} />);
+    component = render(<Form saveLesson={mockSaveLesson} />);
   });
 
   test('renders correctly', () => {
@@ -41,6 +40,5 @@ describe('Form component', () => {
     });
   });
   
-
   // add more tests here as needed
 });

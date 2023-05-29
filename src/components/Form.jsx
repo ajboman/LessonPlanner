@@ -94,13 +94,14 @@ const Form = ({ saveLesson }) => {
   };
 
   const closePopup = () => setShowPopup(false);
+  
   return (
     <section className="mt-16 w-full flex justify-center">
       <form
-        className="relative flex flex-col gap-4"
+        className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 p-5"
         onSubmit={handleSubmit}
       >
-        {formFields.map(field => (
+        {formFields.map((field, index) => (
           <FormInput 
             key={field.name}
             name={field.name}
@@ -108,9 +109,10 @@ const Form = ({ saveLesson }) => {
             type={field.type}
             value={formData[field.name] || ''}
             onChange={handleChange}
+            className={index % 2 === 0 ? "md:col-span-2" : ""}
           />
         ))}
-        <Button type="submit" className='mb-10 bg-black'>Submit</Button>
+        <Button type="submit" className='mb-10 bg-black col-span-full'>Submit</Button>
       </form>
       {showPopup && (
         <Popup response={apiResponse} isVisible={showPopup} onClose={closePopup} onSave={handleSave} />
@@ -123,5 +125,6 @@ const Form = ({ saveLesson }) => {
     </section>
   );
 };
+
 
 export default Form;
