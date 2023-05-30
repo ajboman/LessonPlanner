@@ -1,4 +1,4 @@
-import { getFirestore, doc, setDoc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc, getDoc, updateDoc, deleteDoc, collection, addDoc, where, query, getDocs } from "firebase/firestore";
 import { app } from './Firebase';
 
 const db = getFirestore(app);
@@ -39,3 +39,49 @@ export const deleteUserDocument = async (uid) => {
   const userRef = doc(db, "users", uid);
   await deleteDoc(userRef);
 };
+
+export const createLessonDocument = async (lesson, userId) => {
+    const lessonRef = doc(collection(db, 'lessons'));
+    const lessonData = { ...lesson, userId }; // Include the userId field in the lesson data
+    await setDoc(lessonRef, lessonData);
+    return lessonRef.id; // Return the auto-generated lesson ID
+  };
+  
+  
+  export const readLessonDocument = async (lessonId) => {
+    const lessonRef = doc(db, "lessons", lessonId);
+    const lessonSnap = await getDoc(lessonRef);
+    if (lessonSnap.exists()) {
+      return lessonSnap.data();
+    } else {
+      console.log('No such lesson!');
+      return null;
+    }
+  };
+  
+  export const updateLessonDocument = async (lessonId, updatedData) => {
+    const lessonRef = doc(db, "lessons", lessonId);
+    await updateDoc(lessonRef, updatedData);
+  };
+  
+  export const deleteLessonDocument = async (lessonId) => {
+    const lessonRef = doc(db, "lessons", lessonId);
+    await deleteDoc(lessonRef);
+  };
+  
+  export const readAllUserLessons = async (userId) => {
+    const lessonsRef = collection(db, "lessons");
+    const querySnapshot = await getDocs(query(lessonsRef, where("userId", "==", userId)));
+  
+    const lessons = [];
+    querySnapshot.forEach((doc) => {
+      lessons.push({
+        id: doc.id,
+        lesson: doc.data().lesson,
+        userId: doc.data().userId,
+      });
+    });
+    
+    return lessons;
+  };
+  
