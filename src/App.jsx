@@ -39,7 +39,6 @@ const App = () => {
         signInAnonymously(auth).catch(error => console.error(error));
       } else {
         setUser(user);
-        console.log(user);
       }
     });
 
