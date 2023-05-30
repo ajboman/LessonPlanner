@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { getAuth, linkWithCredential, signInWithEmailAndPassword, EmailAuthProvider  } from 'firebase/auth';
+import { getAuth, linkWithCredential, signInWithEmailAndPassword, EmailAuthProvider } from 'firebase/auth';
 import UserContext from '../services/UserContext';
 import { TextInput, Button, Label } from 'flowbite-react';
 import { sendVerificationEmail } from '../services/emailVerification';
@@ -30,31 +30,31 @@ const Login = ({ isOpen, closeModal }) => {
 
   const handleSignUp = async (event) => {
     event.preventDefault();
-  
+
     const auth = getAuth();
     try {
       // Create an email/password credential
       const emailCredential = EmailAuthProvider.credential(email, password);
-      
+
       // Link the anonymous account with the email credential
       // Note that this will fail if the anonymous account has already been linked to another email address
       await linkWithCredential(auth.currentUser, emailCredential);
-  
+
       // Sign-up (linking) successful
       const user = auth.currentUser;
       console.log('User upgraded:', user);
       await sendVerificationEmail(user); // Send email verification
-  
+
       // Update email field in Firestore
       await updateUserDocument(user.uid, { email: user.email });
-  
+
       closeModal();
     } catch (error) {
       console.error('Error signing up:', error);
       setErrorMessage('Error creating an account. Please try again.');
     }
   };
-  
+
   const toggleForm = () => {
     setIsLogin(!isLogin);
     setErrorMessage('');
@@ -114,7 +114,8 @@ const Login = ({ isOpen, closeModal }) => {
               </Button>
             </div>
             <div>
-              <Button onClick={toggleForm} className="text-sm text-blue-500 hover:underline">
+              <Button onClick={toggleForm} style={{ color: '#3B82F6' }}
+                className="text-sm text-blue-500 hover:underline">
                 Don't have an account? Create an account
               </Button>
             </div>
@@ -148,7 +149,7 @@ const Login = ({ isOpen, closeModal }) => {
               </Button>
             </div>
             <div>
-              <Button onClick={toggleForm} className="text-sm text-blue-500 hover:underline">
+              <Button onClick={toggleForm} style={{ color: '#3B82F6' }} className="text-sm text-blue-500 hover:underline">
                 Already have an account? Log in
               </Button>
             </div>
