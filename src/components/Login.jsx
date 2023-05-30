@@ -8,6 +8,7 @@ const Login = ({ isOpen, closeModal }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLogin, setIsLogin] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
   const user = useContext(UserContext);
 
   const handleLogin = async (event) => {
@@ -22,6 +23,7 @@ const Login = ({ isOpen, closeModal }) => {
       closeModal();
     } catch (error) {
       console.error('Error logging in:', error);
+      setErrorMessage('Incorrect email or password. Please try again.');
     }
   };
 
@@ -38,11 +40,13 @@ const Login = ({ isOpen, closeModal }) => {
       closeModal();
     } catch (error) {
       console.error('Error signing up:', error);
+      setErrorMessage('Error creating an account. Please try again.');
     }
   };
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
+    setErrorMessage('');
   };
 
   if (!isOpen) {
@@ -67,8 +71,9 @@ const Login = ({ isOpen, closeModal }) => {
           </svg>
         </button>
         <h3 className="text-xl font-medium text-gray-900">
-          {isLogin ? 'Sign in to our platform' : 'Create an account'}
+          {isLogin ? 'Login' : 'Create an account'}
         </h3>
+        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
         {isLogin ? (
           <form onSubmit={handleLogin} className="mt-4 space-y-4">
             <div>
@@ -99,7 +104,7 @@ const Login = ({ isOpen, closeModal }) => {
             </div>
             <div>
               <Button onClick={toggleForm} className="text-sm text-blue-500 hover:underline">
-                Create an account
+                Don't have an account? Create an account
               </Button>
             </div>
           </form>
