@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import UserContext from './services/UserContext';
+import { createUserDocument } from './services/Firestore';
 
 import { getAuth, signInAnonymously } from "firebase/auth";
 import { app } from './services/Firebase';
@@ -39,14 +40,17 @@ const App = () => {
 
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (!user) {
-        signInAnonymously(auth).catch(error => console.error(error));
+        signInAnonymously(auth).then(userCredential => {
+          createUserDocument(userCredential.user);
+        }).catch(error => console.error(error));
       } else {
         setUser(user);
       }
     });
-
+  
     return () => unsubscribe();
   }, []);
+  
 
   const openLogin = () => {
     setIsLoginOpen(true);

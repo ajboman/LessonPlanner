@@ -1,10 +1,24 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { getAuth, signOut } from 'firebase/auth';
 import UserContext from '../services/UserContext';
 import { Button } from 'flowbite-react';
+import { updateUserDocument, readUserDocument } from '../services/Firestore';
 
 const Profile = () => {
   const user = useContext(UserContext);
+
+  useEffect(() => {
+    const verifyUserEmail = async () => {
+      const userData = await readUserDocument(user.uid);
+      if (user.emailVerified && !userData.verified) {
+        await updateUserDocument(user.uid, { verified: true });
+      }
+    };
+
+    if (user) {
+      verifyUserEmail();
+    }
+  }, [user]);
 
   const handleLogout = () => {
     const auth = getAuth();

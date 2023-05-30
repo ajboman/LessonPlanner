@@ -1,8 +1,9 @@
 import { useState, useContext } from 'react';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, linkWithCredential, signInWithEmailAndPassword, EmailAuthProvider  } from 'firebase/auth';
 import UserContext from '../services/UserContext';
 import { TextInput, Button, Label } from 'flowbite-react';
 import { sendVerificationEmail } from '../services/emailVerification';
+import { updateUserDocument } from '../services/Firestore';
 
 const Login = ({ isOpen, closeModal }) => {
   const [email, setEmail] = useState('');
@@ -29,21 +30,31 @@ const Login = ({ isOpen, closeModal }) => {
 
   const handleSignUp = async (event) => {
     event.preventDefault();
-
+  
     const auth = getAuth();
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      // Sign-up successful
-      const user = userCredential.user;
-      console.log('New user created:', user);
+      // Create an email/password credential
+      const emailCredential = EmailAuthProvider.credential(email, password);
+      
+      // Link the anonymous account with the email credential
+      // Note that this will fail if the anonymous account has already been linked to another email address
+      await linkWithCredential(auth.currentUser, emailCredential);
+  
+      // Sign-up (linking) successful
+      const user = auth.currentUser;
+      console.log('User upgraded:', user);
       await sendVerificationEmail(user); // Send email verification
+  
+      // Update email field in Firestore
+      await updateUserDocument(user.uid, { email: user.email });
+  
       closeModal();
     } catch (error) {
       console.error('Error signing up:', error);
       setErrorMessage('Error creating an account. Please try again.');
     }
   };
-
+  
   const toggleForm = () => {
     setIsLogin(!isLogin);
     setErrorMessage('');
