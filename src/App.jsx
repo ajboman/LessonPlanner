@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import UserContext from './services/UserContext';
+import { createUserDocument } from './services/Firestore';
+import { createLessonDocument, deleteLessonDocument, readAllUserLessons } from './services/Firestore';
 
 import { getAuth, signInAnonymously } from "firebase/auth";
 import { app } from './services/Firebase';
@@ -39,7 +41,9 @@ const App = () => {
 
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (!user) {
-        signInAnonymously(auth).catch(error => console.error(error));
+        signInAnonymously(auth).then(userCredential => {
+          createUserDocument(userCredential.user);
+        }).catch(error => console.error(error));
       } else {
         setUser(user);
       }
@@ -47,6 +51,7 @@ const App = () => {
 
     return () => unsubscribe();
   }, []);
+
 
   const openLogin = () => {
     setIsLoginOpen(true);
@@ -56,19 +61,44 @@ const App = () => {
     setIsLoginOpen(false);
   };
 
+  useEffect(() => {
+    if (user && user.uid) {
+      readAllUserLessons(user.uid)
+        .then((lessons) => {
+          const formattedLessons = lessons.map((lesson) => ({
+            id: lesson.id,
+            lesson: lesson.lesson,
+          }));
+          setAllLessons(formattedLessons);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [user]);
+
+
   const saveLesson = (lesson) => {
-    const newLessons = [...allLessons, lesson];
-    setAllLessons(newLessons);
-    localStorage.setItem('lessons', JSON.stringify(newLessons));
+    if (user && user.uid) {
+      createLessonDocument(lesson, user.uid)
+        .then(() => {
+          setAllLessons((prevLessons) => [...prevLessons, { id: lesson.id, data: lesson.data }]);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
   };
 
-  const deleteLesson = (index) => {
-    const updatedLessons = [...allLessons];
-    updatedLessons.splice(index, 1);
-    setAllLessons(updatedLessons);
-    localStorage.setItem('lessons', JSON.stringify(updatedLessons));
+  const deleteLesson = (lessonId) => {
+    deleteLessonDocument(lessonId)
+      .then(() => {
+        setAllLessons(allLessons.filter(lesson => lesson.id !== lessonId));
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
-
   return (
     <UserContext.Provider value={user}>
       <Router>
