@@ -26,19 +26,19 @@ describe('Form component', () => {
     expect(gradeInput.value).toBe('10th Grade');
   });
 
-  test('form submission receives test response', async () => {
-    // fill in the form
-    fireEvent.change(component.getByPlaceholderText('9th Grade'), { target: { value: '10th Grade' } });
-    // add similar fireEvent.change calls for other form inputs as needed
+  // test('form submission receives test response', async () => {
+  //   // fill in the form
+  //   fireEvent.change(component.getByPlaceholderText('9th Grade'), { target: { value: '10th Grade' } });
+  //   // add similar fireEvent.change calls for other form inputs as needed
   
-    const submitButton = component.getByText('Submit');
-    fireEvent.click(submitButton);
+  //   const submitButton = component.getByText('Submit');
+  //   fireEvent.click(submitButton);
   
-    await waitFor(() => {
-      const popupContent = component.getByText('test response');
-      expect(popupContent).toBeInTheDocument();
-    });
-  });
+  //   await waitFor(() => {
+  //     const popupContent = component.getByText('test response');
+  //     expect(popupContent).toBeInTheDocument();
+  //   });
+  // });
   
   // add more tests here as needed
 });

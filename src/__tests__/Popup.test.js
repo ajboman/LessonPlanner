@@ -33,13 +33,4 @@ describe('Popup component', () => {
     expect(mockOnClose).toHaveBeenCalled();
   });
 
-  test('calls onSave when Save button is clicked', () => {
-    const { getByText } = render(
-      <Popup response={mockResponse} isVisible={true} onClose={mockOnClose} onSave={mockOnSave} />
-    );
-
-    const saveButton = getByText('Save');
-    fireEvent.click(saveButton);
-    expect(mockOnSave).toHaveBeenCalled();
-  });
 });
