@@ -46,7 +46,7 @@ const Login = ({ isOpen, closeModal }) => {
       await sendVerificationEmail(user); // Send email verification
 
       // Update email field in Firestore
-      await updateUserDocument(user.uid, { email: user.email });
+      await updateUserDocument(user.uid, { email: user.email, type: 'basic' });
 
       closeModal();
     } catch (error) {

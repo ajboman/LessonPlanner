@@ -62,6 +62,24 @@ const Form = ({ saveLesson }) => {
     return new_prompt;
   };
 
+  const updateTotalSubmits = async (uid) => {
+    const db = getFirestore();
+    const userRef = doc(db, 'users', uid);
+  
+    // Get current document
+    const docSnap = await getDoc(userRef);
+  
+    // Check if the document exists
+    if (docSnap.exists()) {
+      // Increment totalSubmits by 1
+      const newTotalSubmits = (docSnap.data().totalSubmits || 0) + 1;
+      
+      // Update totalSubmits in Firestore
+      await updateDoc(userRef, { totalSubmits: newTotalSubmits });
+    } else {
+      console.log(`No such document for user: ${uid}`);
+    }
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -80,11 +98,19 @@ const Form = ({ saveLesson }) => {
   
       setApiResponse(response.text);
       setShowPopup(true);
+
+      // Get current user uid
+      const auth = getAuth();
+      const uid = auth.currentUser.uid;
+
+      // Update totalSubmits in Firestore
+      await updateTotalSubmits(uid);
+
     } catch (error) {
       console.error("Error:", error);
     }
     setIsLoading(false);
-  };
+};
   
   
 
