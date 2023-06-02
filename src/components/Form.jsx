@@ -1,9 +1,13 @@
 import { useState } from 'react';
+import { getAuth } from 'firebase/auth';
+import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';
+
 import createOpenAICompletion from '../services/route';
 import Popup from './Popup';
 import loaderSvg from '../assets/loader.svg';
 import FormInput from './FormInput';  
 import { Button } from 'flowbite-react';
+
 
 const formFields = [
   {name: 'grade', placeholder: '9th Grade', type: 'text'},
