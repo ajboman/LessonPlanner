@@ -15,6 +15,9 @@ export const createUserDocument = async (user) => {
             email: user.email,
             verified: user.emailVerified,
             clicksRemaining: 1,
+            totalSubmits: 0,
+            type: "anonymous",
+            dateCreated: new Date(),
         });
     }
 };

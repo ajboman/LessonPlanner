@@ -1,9 +1,13 @@
 import { useState } from 'react';
+import { getAuth } from 'firebase/auth';
+import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';
+
 import createOpenAICompletion from '../services/route';
 import Popup from './Popup';
 import loaderSvg from '../assets/loader.svg';
 import FormInput from './FormInput';  
 import { Button } from 'flowbite-react';
+
 
 const formFields = [
   {name: 'grade', placeholder: '9th Grade', type: 'text'},
@@ -62,6 +66,24 @@ const Form = ({ saveLesson }) => {
     return new_prompt;
   };
 
+  const updateTotalSubmits = async (uid) => {
+    const db = getFirestore();
+    const userRef = doc(db, 'users', uid);
+  
+    // Get current document
+    const docSnap = await getDoc(userRef);
+  
+    // Check if the document exists
+    if (docSnap.exists()) {
+      // Increment totalSubmits by 1
+      const newTotalSubmits = (docSnap.data().totalSubmits || 0) + 1;
+      
+      // Update totalSubmits in Firestore
+      await updateDoc(userRef, { totalSubmits: newTotalSubmits });
+    } else {
+      console.log(`No such document for user: ${uid}`);
+    }
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -69,22 +91,53 @@ const Form = ({ saveLesson }) => {
     setIsLoading(true);
   
     try {
+      // Get current user uid
+      const auth = getAuth();
+      const uid = auth.currentUser.uid;
+  
+      // Fetch the user's account type from the Firestore database
+      const db = getFirestore();
+      const userRef = doc(db, 'users', uid);
+      const userDoc = await getDoc(userRef);
+      const accountType = userDoc.data().accountType;
+  
+      // Set max_tokens based on the account type
+      let max_tokens;
+      switch(accountType) {
+        case "anonymous":
+          max_tokens = 250;
+          break;
+        case "basic":
+          max_tokens = 500;
+          break;
+        case "verified":
+          max_tokens = 1000;
+          break;
+        default:
+          max_tokens = 250; // default value in case account type is not set correctly
+      }
+  
       let response;
       if (process.env.NODE_ENV === 'test') {
         // Mocked response for testing
         response = { text: 'test response' };
       } else {
         // Actual API call
-        response = await createOpenAICompletion(prompt);
+        response = await createOpenAICompletion(prompt, max_tokens);
       }
   
       setApiResponse(response.text);
       setShowPopup(true);
+  
+      // Update totalSubmits in Firestore
+      await updateTotalSubmits(uid);
+  
     } catch (error) {
       console.error("Error:", error);
     }
     setIsLoading(false);
   };
+  
   
   
 

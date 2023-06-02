@@ -9,7 +9,9 @@ const Info = () => {
       <h2 className='desc'>
         Provide as many details as you need. <br />
         More details will result in a more precise plan. <br />
-        Save the Lesson Plan to view it in the Lessons page.
+        Login to save the Lesson Plan and view it in the Lessons page. <br />
+        Verify your email for longer responses. <br />
+        Examples will not affect your lesson.
       </h2>
     </header>
 
