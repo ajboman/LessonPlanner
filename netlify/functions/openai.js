@@ -6,7 +6,7 @@ exports.handler = async function(event, context) {
   }
 
   const body = JSON.parse(event.body);
-  const { prompt } = body;
+  const { prompt, max_tokens } = body;
 
   try {
     const configuration = new Configuration({
@@ -16,7 +16,7 @@ exports.handler = async function(event, context) {
     const response = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: prompt,
-      max_tokens: 300,
+      max_tokens: max_tokens,
       temperature: 0,
     });
 

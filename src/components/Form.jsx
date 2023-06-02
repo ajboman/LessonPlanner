@@ -91,30 +91,53 @@ const Form = ({ saveLesson }) => {
     setIsLoading(true);
   
     try {
+      // Get current user uid
+      const auth = getAuth();
+      const uid = auth.currentUser.uid;
+  
+      // Fetch the user's account type from the Firestore database
+      const db = getFirestore();
+      const userRef = doc(db, 'users', uid);
+      const userDoc = await getDoc(userRef);
+      const accountType = userDoc.data().accountType;
+  
+      // Set max_tokens based on the account type
+      let max_tokens;
+      switch(accountType) {
+        case "anonymous":
+          max_tokens = 250;
+          break;
+        case "basic":
+          max_tokens = 500;
+          break;
+        case "verified":
+          max_tokens = 1000;
+          break;
+        default:
+          max_tokens = 250; // default value in case account type is not set correctly
+      }
+  
       let response;
       if (process.env.NODE_ENV === 'test') {
         // Mocked response for testing
         response = { text: 'test response' };
       } else {
         // Actual API call
-        response = await createOpenAICompletion(prompt);
+        response = await createOpenAICompletion(prompt, max_tokens);
       }
   
       setApiResponse(response.text);
       setShowPopup(true);
-
-      // Get current user uid
-      const auth = getAuth();
-      const uid = auth.currentUser.uid;
-
+  
       // Update totalSubmits in Firestore
       await updateTotalSubmits(uid);
-
+  
     } catch (error) {
       console.error("Error:", error);
     }
     setIsLoading(false);
-};
+  };
+  
   
   
 
