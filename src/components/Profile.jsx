@@ -36,7 +36,7 @@ const Profile = () => {
       {user && user.email ? (
         <>
           <h3>Email: {user.email}</h3>
-          {user.emailVerified ? <p>Email verified ✔️</p> : <p>Email not verified</p>}
+          {user.emailVerified ? <p>Email verified ✔️</p> : <p>Email has been sent. May Appear in Spam Folder.</p>}
           <Button onClick={handleLogout} className="bg-red-600 hover:bg-red-700">
             Logout
           </Button>
