@@ -47,7 +47,6 @@ const App = () => {
       } else {
         setUser(user);
       }
-      console.log(user);
     });
 
     return () => unsubscribe();
