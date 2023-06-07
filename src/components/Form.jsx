@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';
 import UserContext from '../services/UserContext'; 
@@ -57,23 +57,23 @@ const Form = ({ saveLesson }) => {
     }
   }, [errorMessage]);
 
-  const getClicksRemaining = async (uid) => {
+  const getUserData = async (uid) => {
     const db = getFirestore();
     const userRef = doc(db, 'users', uid);
-  
+
     // Get current document
     const docSnap = await getDoc(userRef);
 
-    // Return the current clicks remaining or 0 if undefined
-    return docSnap.data().clicksRemaining || 0;
+    // Return the current user data
+    return docSnap.data();
   }
 
-  const updateClicksRemaining = async (uid, newClicks) => {
+  const updateUserData = async (uid, newClicks, newTotalSubmits) => {
     const db = getFirestore();
     const userRef = doc(db, 'users', uid);
-  
-    // Update clicksRemaining in Firestore
-    await updateDoc(userRef, { clicksRemaining: newClicks });
+
+    // Update clicksRemaining and totalSubmits in Firestore
+    await updateDoc(userRef, { clicksRemaining: newClicks, totalSubmits: newTotalSubmits });
   }
 
   const handleChange = (event) => {
@@ -99,39 +99,20 @@ const Form = ({ saveLesson }) => {
     return new_prompt;
   };
 
-  const updateTotalSubmits = async (uid) => {
-    const db = getFirestore();
-    const userRef = doc(db, 'users', uid);
-  
-    // Get current document
-    const docSnap = await getDoc(userRef);
-  
-    // Check if the document exists
-    if (docSnap.exists()) {
-      // Increment totalSubmits by 1
-      const newTotalSubmits = (docSnap.data().totalSubmits || 0) + 1;
-      
-      // Update totalSubmits in Firestore
-      await updateDoc(userRef, { totalSubmits: newTotalSubmits });
-    } else {
-      console.log(`No such document for user: ${uid}`);
-    }
-  }
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     // Reset error message
     setErrorMessage('');
-    
+
     // Get current user uid
     const auth = getAuth();
     const uid = auth.currentUser.uid;
 
     // Check if user is anonymous and if they have clicks remaining
     if (isAnonymous) {
-      const clicksRemaining = await getClicksRemaining(uid);
-      if (clicksRemaining <= 0) {
+      const userData = await getUserData(uid);
+      if (userData.clicksRemaining <= 0) {
         setErrorMessage("Please login or sign up to continue");
         return;
       }
@@ -145,11 +126,10 @@ const Form = ({ saveLesson }) => {
       const auth = getAuth();
       const uid = auth.currentUser.uid;
   
-      // Fetch the user's account type from the Firestore database
-      const db = getFirestore();
-      const userRef = doc(db, 'users', uid);
-      const userDoc = await getDoc(userRef);
-      const accountType = userDoc.data().accountType;
+      // Fetch the user's account type and clicks remaining from the Firestore database
+      const userData = await getUserData(uid);
+      const accountType = userData.accountType;
+      const clicksRemaining = userData.clicksRemaining;
   
       // Set max_tokens based on the account type
       let max_tokens;
@@ -178,18 +158,20 @@ const Form = ({ saveLesson }) => {
   
       setApiResponse(response.text);
       setShowPopup(true);
-  
-      // Update totalSubmits in Firestore
-      await updateTotalSubmits(uid);
-  
+
+      const newTotalSubmits = (userData.totalSubmits || 0) + 1;
+      if (isAnonymous) {
+        const newClicks = clicksRemaining - 1;
+        await updateUserData(uid, newClicks, newTotalSubmits);
+      } else {
+        const newClicks = clicksRemaining;
+        await updateUserData(uid, newClicks, newTotalSubmits);
+      }
+
     } catch (error) {
       console.error("Error:", error);
     }
     setIsLoading(false);
-    if (isAnonymous) {
-      const newClicks = await getClicksRemaining(uid) - 1;
-      await updateClicksRemaining(uid, newClicks);
-    }
   };
   
   const handleSave = () => {
