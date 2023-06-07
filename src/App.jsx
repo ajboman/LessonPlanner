@@ -29,12 +29,6 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
-  useEffect(() => {
-    const storedLessons = JSON.parse(localStorage.getItem('lessons'));
-    if (storedLessons) {
-      setAllLessons(storedLessons);
-    }
-  }, []);
 
   useEffect(() => {
     const auth = getAuth(app);
