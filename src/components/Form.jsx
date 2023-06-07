@@ -43,9 +43,19 @@ const Form = ({ saveLesson }) => {
   const [apiResponse, setApiResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [buttonText, setButtonText] = useState('Submit');
 
   const user = useContext(UserContext);
   const isAnonymous = user ? user.isAnonymous : true;
+
+  useEffect(() => {
+    if (errorMessage !== '') {
+      setButtonText(errorMessage);
+      setTimeout(() => {
+        setButtonText('Submit');
+      }, 3000);
+    }
+  }, [errorMessage]);
 
   const getClicksRemaining = async (uid) => {
     const db = getFirestore();
@@ -191,7 +201,6 @@ const Form = ({ saveLesson }) => {
   
   return (
     <section className="mt-16 w-full flex justify-center">
-      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       <form
         className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 p-5"
         onSubmit={handleSubmit}
@@ -207,7 +216,7 @@ const Form = ({ saveLesson }) => {
             className={index % 2 === 0 ? "md:col-span-2" : ""}
           />
         ))}
-        <Button type="submit" className='mb-10 bg-black col-span-full'>Submit</Button>
+        <Button type="submit" className='mb-10 bg-black col-span-full'>{buttonText}</Button>
       </form>
       {showPopup && (
         <Popup response={apiResponse} isVisible={showPopup} onClose={closePopup} onSave={handleSave} />
