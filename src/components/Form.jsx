@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';
+import UserContext from '../services/UserContext'; 
 
 import createOpenAICompletion from '../services/route';
 import Popup from './Popup';
@@ -41,7 +42,29 @@ const Form = ({ saveLesson }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [apiResponse, setApiResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
+  const user = useContext(UserContext);
+  const isAnonymous = user ? user.isAnonymous : true;
+
+  const getClicksRemaining = async (uid) => {
+    const db = getFirestore();
+    const userRef = doc(db, 'users', uid);
+  
+    // Get current document
+    const docSnap = await getDoc(userRef);
+
+    // Return the current clicks remaining or 0 if undefined
+    return docSnap.data().clicksRemaining || 0;
+  }
+
+  const updateClicksRemaining = async (uid, newClicks) => {
+    const db = getFirestore();
+    const userRef = doc(db, 'users', uid);
+  
+    // Update clicksRemaining in Firestore
+    await updateDoc(userRef, { clicksRemaining: newClicks });
+  }
 
   const handleChange = (event) => {
     setFormData({
@@ -87,9 +110,26 @@ const Form = ({ saveLesson }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Reset error message
+    setErrorMessage('');
+    
+    // Get current user uid
+    const auth = getAuth();
+    const uid = auth.currentUser.uid;
+
+    // Check if user is anonymous and if they have clicks remaining
+    if (isAnonymous) {
+      const clicksRemaining = await getClicksRemaining(uid);
+      if (clicksRemaining <= 0) {
+        setErrorMessage("Please login or sign up to continue");
+        return;
+      }
+    }
+
     const prompt = createString(formData);
     setIsLoading(true);
-  
+
     try {
       // Get current user uid
       const auth = getAuth();
@@ -136,11 +176,12 @@ const Form = ({ saveLesson }) => {
       console.error("Error:", error);
     }
     setIsLoading(false);
+    if (isAnonymous) {
+      const newClicks = await getClicksRemaining(uid) - 1;
+      await updateClicksRemaining(uid, newClicks);
+    }
   };
   
-  
-  
-
   const handleSave = () => {
     saveLesson(apiResponse);
     closePopup();
@@ -150,6 +191,7 @@ const Form = ({ saveLesson }) => {
   
   return (
     <section className="mt-16 w-full flex justify-center">
+      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       <form
         className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 p-5"
         onSubmit={handleSubmit}

@@ -82,7 +82,7 @@ const App = () => {
     if (user && user.uid) {
       createLessonDocument(lesson, user.uid)
         .then(() => {
-          setAllLessons((prevLessons) => [...prevLessons, { id: lesson.id, data: lesson.data }]);
+          setAllLessons((prevLessons) => [...prevLessons, { id: lesson.id, lesson: lesson.lesson }]);
         })
         .catch(error => {
           console.error(error);
