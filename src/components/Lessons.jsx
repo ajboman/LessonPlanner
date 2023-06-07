@@ -1,18 +1,25 @@
 import { Card, Button } from 'flowbite-react';
+import { useEffect, useState } from 'react';
 
 const Lessons = ({ allLessons, onDeleteLesson }) => {
+  const [lessons, setLessons] = useState([]);
+
   const handleDeleteLesson = (index) => {
     onDeleteLesson(index);
   };
+
+  useEffect(() => {
+    setLessons(allLessons);
+  }, [allLessons]);
 
   return (
     <div>
       <h1 className="mb-4 text-xl font-bold">Lessons</h1>
       <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
-        {allLessons.length === 0 ? (
+        {lessons.length === 0 ? (
           <p>No lessons saved yet.</p>
         ) : (
-          allLessons.map((lesson) => (
+          lessons.map((lesson) => (
             <Card key={lesson.id} className="relative overflow-y-auto max-h-96 bg-inherit">
               <Button 
                 onClick={() => handleDeleteLesson(lesson.id)}
