@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';
+import UserContext from '../services/UserContext'; 
 
 import createOpenAICompletion from '../services/route';
 import Popup from './Popup';
@@ -41,7 +42,39 @@ const Form = ({ saveLesson }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [apiResponse, setApiResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [buttonText, setButtonText] = useState('Submit');
 
+  const user = useContext(UserContext);
+  const isAnonymous = user ? user.isAnonymous : true;
+
+  useEffect(() => {
+    if (errorMessage !== '') {
+      setButtonText(errorMessage);
+      setTimeout(() => {
+        setButtonText('Submit');
+      }, 3000);
+    }
+  }, [errorMessage]);
+
+  const getUserData = async (uid) => {
+    const db = getFirestore();
+    const userRef = doc(db, 'users', uid);
+
+    // Get current document
+    const docSnap = await getDoc(userRef);
+
+    // Return the current user data
+    return docSnap.data();
+  }
+
+  const updateUserData = async (uid, newClicks, newTotalSubmits) => {
+    const db = getFirestore();
+    const userRef = doc(db, 'users', uid);
+
+    // Update clicksRemaining and totalSubmits in Firestore
+    await updateDoc(userRef, { clicksRemaining: newClicks, totalSubmits: newTotalSubmits });
+  }
 
   const handleChange = (event) => {
     setFormData({
@@ -66,40 +99,37 @@ const Form = ({ saveLesson }) => {
     return new_prompt;
   };
 
-  const updateTotalSubmits = async (uid) => {
-    const db = getFirestore();
-    const userRef = doc(db, 'users', uid);
-  
-    // Get current document
-    const docSnap = await getDoc(userRef);
-  
-    // Check if the document exists
-    if (docSnap.exists()) {
-      // Increment totalSubmits by 1
-      const newTotalSubmits = (docSnap.data().totalSubmits || 0) + 1;
-      
-      // Update totalSubmits in Firestore
-      await updateDoc(userRef, { totalSubmits: newTotalSubmits });
-    } else {
-      console.log(`No such document for user: ${uid}`);
-    }
-  }
-
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Reset error message
+    setErrorMessage('');
+
+    // Get current user uid
+    const auth = getAuth();
+    const uid = auth.currentUser.uid;
+
+    // Check if user is anonymous and if they have clicks remaining
+    if (isAnonymous) {
+      const userData = await getUserData(uid);
+      if (userData.clicksRemaining <= 0) {
+        setErrorMessage("Please login or sign up to continue");
+        return;
+      }
+    }
+
     const prompt = createString(formData);
     setIsLoading(true);
-  
+
     try {
       // Get current user uid
       const auth = getAuth();
       const uid = auth.currentUser.uid;
   
-      // Fetch the user's account type from the Firestore database
-      const db = getFirestore();
-      const userRef = doc(db, 'users', uid);
-      const userDoc = await getDoc(userRef);
-      const accountType = userDoc.data().accountType;
+      // Fetch the user's account type and clicks remaining from the Firestore database
+      const userData = await getUserData(uid);
+      const accountType = userData.accountType;
+      const clicksRemaining = userData.clicksRemaining;
   
       // Set max_tokens based on the account type
       let max_tokens;
@@ -128,19 +158,22 @@ const Form = ({ saveLesson }) => {
   
       setApiResponse(response.text);
       setShowPopup(true);
-  
-      // Update totalSubmits in Firestore
-      await updateTotalSubmits(uid);
-  
+
+      const newTotalSubmits = (userData.totalSubmits || 0) + 1;
+      if (isAnonymous) {
+        const newClicks = clicksRemaining - 1;
+        await updateUserData(uid, newClicks, newTotalSubmits);
+      } else {
+        const newClicks = clicksRemaining;
+        await updateUserData(uid, newClicks, newTotalSubmits);
+      }
+
     } catch (error) {
       console.error("Error:", error);
     }
     setIsLoading(false);
   };
   
-  
-  
-
   const handleSave = () => {
     saveLesson(apiResponse);
     closePopup();
@@ -165,7 +198,7 @@ const Form = ({ saveLesson }) => {
             className={index % 2 === 0 ? "md:col-span-2" : ""}
           />
         ))}
-        <Button type="submit" className='mb-10 bg-black col-span-full'>Submit</Button>
+        <Button type="submit" className='mb-10 bg-black col-span-full'>{buttonText}</Button>
       </form>
       {showPopup && (
         <Popup response={apiResponse} isVisible={showPopup} onClose={closePopup} onSave={handleSave} />

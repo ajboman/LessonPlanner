@@ -29,12 +29,6 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
-  useEffect(() => {
-    const storedLessons = JSON.parse(localStorage.getItem('lessons'));
-    if (storedLessons) {
-      setAllLessons(storedLessons);
-    }
-  }, []);
 
   useEffect(() => {
     const auth = getAuth(app);
@@ -82,7 +76,7 @@ const App = () => {
     if (user && user.uid) {
       createLessonDocument(lesson, user.uid)
         .then(() => {
-          setAllLessons((prevLessons) => [...prevLessons, { id: lesson.id, data: lesson.data }]);
+          setAllLessons((prevLessons) => [...prevLessons, { id: lesson.id, lesson: lesson.lesson }]);
         })
         .catch(error => {
           console.error(error);
