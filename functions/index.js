@@ -4,10 +4,8 @@ admin.initializeApp();
 
 exports.deleteOldAnonUsers = functions.pubsub.schedule('every 24 hours').onRun(async (context) => {
   const usersRef = admin.firestore().collection('users');
-  const oneDayAgo = admin.firestore.Timestamp.fromDate(new Date(Date.now() - 24 * 60 * 60 * 1000));
 
   const oldAnonUsersSnapshot = await usersRef
-    .where('dateCreated', '<=', oneDayAgo)
     .where('type', '==', 'anonymous')
     .get();
 
