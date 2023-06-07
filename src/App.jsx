@@ -75,14 +75,15 @@ const App = () => {
   const saveLesson = (lesson) => {
     if (user && user.uid) {
       createLessonDocument(lesson, user.uid)
-        .then(() => {
-          setAllLessons((prevLessons) => [...prevLessons, { id: lesson.id, lesson: lesson.lesson }]);
+        .then(newLesson => {
+          setAllLessons(prevLessons => [...prevLessons, { id: newLesson.id, lesson: newLesson.lesson }]);
         })
         .catch(error => {
           console.error(error);
         });
     }
   };
+  
 
   const deleteLesson = (lessonId) => {
     deleteLessonDocument(lessonId)

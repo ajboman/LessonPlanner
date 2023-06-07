@@ -45,11 +45,12 @@ export const deleteUserDocument = async (uid) => {
 
 export const createLessonDocument = async (lesson, userId) => {
     const lessonRef = doc(collection(db, 'lessons'));
-    const lessonData = { lesson, userId }; // Assign the lesson and userId directly without spreading
+    const lessonData = { lesson, userId };
     await setDoc(lessonRef, lessonData);
-    return lessonRef.id; // Return the auto-generated lesson ID
-  };
-  
+    const docSnap = await getDoc(lessonRef);
+    return { id: docSnap.id, ...docSnap.data() };
+};
+
 
 
 export const readLessonDocument = async (lessonId) => {
