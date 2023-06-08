@@ -187,7 +187,7 @@ const Form = ({ saveLesson }) => {
             className={index % 2 === 0 ? "md:col-span-2" : ""}
           />
         ))}
-        <Button type="submit" className='mb-10 bg-black col-span-full hover:bg-gray-600'>{buttonText}</Button>
+        <Button type="submit" className='mb-10 bg-primary col-span-full hover:bg-accent'>{buttonText}</Button>
       </form>
       {showPopup && (
         <Popup response={apiResponse} isVisible={showPopup} onClose={closePopup} onSave={handleSave} />

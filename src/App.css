@@ -9,9 +9,10 @@
   --text: #000000;
   --button: #8b81a2;
   --button-hover: #7c7288;
-  --primary: #675d7e;
-  --secondary: #afa6ba;
+  --primary: #3c344e;
+  --secondary: #c5bad3;
   --accent: #7f68b1;
+  --accent-hover: #9b78e6;
 }
 
 .main {
@@ -68,11 +69,11 @@
 
 
 input[type="text"] {
-  @apply p-2 w-full h-full box-border bg-gray-300 placeholder-gray-500;
+  @apply p-2 w-full h-full box-border text-text bg-secondary placeholder-gray-500;
 }
 
 .textarea {
-  @apply p-2 w-full h-28 box-border mb-5 resize-y bg-gray-300 placeholder-gray-600;
+  @apply p-2 w-full h-28 box-border mb-5 resize-y text-text bg-secondary placeholder-gray-600;
 }
 
 
@@ -102,4 +103,17 @@ input[type="text"] {
   max-width: 400px; /* or any size you'd like */
   width: 100%;
   z-index: 10;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--accent);
+  border-radius: 20px;
 }

@@ -12,6 +12,7 @@ export default {
         button_hover: 'var(--button-hover)',
         primary: 'var(--primary)',
         secondary: 'var(--secondary)',
+        accent_hover: 'var(--accent-hover)',
         accent: 'var(--accent)',
       },
     },
