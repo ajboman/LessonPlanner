@@ -61,10 +61,8 @@ const Form = ({ saveLesson }) => {
     const db = getFirestore();
     const userRef = doc(db, 'users', uid);
 
-    // Get current document
     const docSnap = await getDoc(userRef);
 
-    // Return the current user data
     return docSnap.data();
   }
 
@@ -72,7 +70,6 @@ const Form = ({ saveLesson }) => {
     const db = getFirestore();
     const userRef = doc(db, 'users', uid);
 
-    // Update clicksRemaining and totalSubmits in Firestore
     await updateDoc(userRef, { clicksRemaining: newClicks, totalSubmits: newTotalSubmits });
   }
 
@@ -102,14 +99,11 @@ const Form = ({ saveLesson }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Reset error message
     setErrorMessage('');
 
-    // Get current user uid
     const auth = getAuth();
     const uid = auth.currentUser.uid;
 
-    // Check if user is anonymous and if they have clicks remaining
     if (isAnonymous) {
       const userData = await getUserData(uid);
       if (userData.clicksRemaining <= 0) {
@@ -122,16 +116,13 @@ const Form = ({ saveLesson }) => {
     setIsLoading(true);
 
     try {
-      // Get current user uid
       const auth = getAuth();
       const uid = auth.currentUser.uid;
   
-      // Fetch the user's account type and clicks remaining from the Firestore database
       const userData = await getUserData(uid);
       const accountType = userData.accountType;
       const clicksRemaining = userData.clicksRemaining;
   
-      // Set max_tokens based on the account type
       let max_tokens;
       switch(accountType) {
         case "anonymous":
@@ -144,15 +135,13 @@ const Form = ({ saveLesson }) => {
           max_tokens = 1000;
           break;
         default:
-          max_tokens = 250; // default value in case account type is not set correctly
+          max_tokens = 250; 
       }
   
       let response;
       if (process.env.NODE_ENV === 'test') {
-        // Mocked response for testing
         response = { text: 'test response' };
       } else {
-        // Actual API call
         response = await createOpenAICompletion(prompt, max_tokens);
       }
   
@@ -198,7 +187,7 @@ const Form = ({ saveLesson }) => {
             className={index % 2 === 0 ? "md:col-span-2" : ""}
           />
         ))}
-        <Button type="submit" className='mb-10 bg-black col-span-full'>{buttonText}</Button>
+        <Button type="submit" className='mb-10 bg-black col-span-full hover:bg-gray-600'>{buttonText}</Button>
       </form>
       {showPopup && (
         <Popup response={apiResponse} isVisible={showPopup} onClose={closePopup} onSave={handleSave} />

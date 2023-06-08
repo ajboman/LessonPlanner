@@ -15,25 +15,25 @@ const Navbar = ({ openLogin }) => {
 				</Flowbar.Brand>
 				<div className="flex-grow"></div>
 				<Flowbar.Link as={Link} to="/plan">
-					<Button className="m-2 bg-gray-500">
+					<Button className="m-2 bg-gray-500 hover:bg-gray-600">
 						Plan
 					</Button>
 				</Flowbar.Link>
 				<Flowbar.Link as={Link} to="/lessons">
-					<Button className="m-2 bg-gray-500">
+					<Button className="m-2 bg-gray-500 hover:bg-gray-600">
 						Lessons
 					</Button>
 				</Flowbar.Link>
 				{isAnonymous ? (
 					<Button
-						className="m-2 bg-gray-500"
+						className="m-2 bg-gray-500 hover:bg-gray-600"
 						onClick={openLogin}
 					>
 						Login
 					</Button>
 				) : (
 					<Flowbar.Link as={Link} to="/profile">
-						<Button className="m-2 bg-gray-500">
+						<Button className="m-2 bg-gray-500 hover:bg-gray-600">
 							Profile
 						</Button>
 					</Flowbar.Link>

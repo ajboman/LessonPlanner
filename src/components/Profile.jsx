@@ -1,12 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
-import { getAuth, signOut, sendPasswordResetEmail } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
 import UserContext from '../services/UserContext';
-import { Button, Modal } from 'flowbite-react';
+import { Button } from 'flowbite-react';
 import { updateUserDocument, readUserDocument } from '../services/Firestore';
+import ResetPassword from '../components/ResetPassword';
+import Logout from '../components/Logout';
 
 const Profile = () => {
   const user = useContext(UserContext);
-  const [showModal, setShowModal] = useState(false);
+  const [showResetPasswordModal, setShowResetPasswordModal] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   useEffect(() => {
     const verifyUserEmail = async () => {
@@ -25,25 +28,11 @@ const Profile = () => {
     const auth = getAuth();
     signOut(auth)
       .then(() => {
-        // Logout successful
+        setShowLogoutModal(false); 
       })
       .catch((error) => {
         console.error('Error logging out:', error);
       });
-  };
-
-  const handlePasswordReset = () => {
-    const auth = getAuth();
-    if (user && user.email) {
-      sendPasswordResetEmail(auth, user.email)
-        .then(() => {
-          alert('Password reset email sent!');
-          setShowModal(false);
-        })
-        .catch((error) => {
-          console.error('Error sending password reset email:', error);
-        });
-    }
   };
 
   return (
@@ -51,50 +40,29 @@ const Profile = () => {
       {user && user.email ? (
         <>
           <h3>Email: {user.email}</h3>
-          {user.emailVerified ? <p>Email verified ✔️</p> : <p>Verified: Email has been sent. May Appear in Spam Folder.</p>}
-          <Button onClick={() => setShowModal(true)} className="bg-blue-600 hover:bg-blue-700 mt-2">
+          {user.emailVerified ? (
+            <p>Email verified ✔️</p>
+          ) : (
+            <p>Verified: Email has been sent. May Appear in Spam Folder.</p>
+          )}
+          <Button
+            onClick={() => setShowResetPasswordModal(true)}
+            className="bg-blue-600 hover:bg-blue-700 mt-2"
+          >
             Reset Password
           </Button>
-          <Button onClick={handleLogout} className="bg-red-600 hover:bg-red-700 mt-4">
+          <Button
+            onClick={() => setShowLogoutModal(true)}
+            className="bg-red-600 hover:bg-red-700 mt-4"
+          >
             Logout
           </Button>
-          
 
-          <Modal
-            onClose={() => setShowModal(false)}
-            popup
-            size="md"
-            show={showModal}
-            className='centered-modal'
-          >
-            <Modal.Header />
-            <Modal.Body>
-              <div className="text-center">
-                <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                  <p>
-                    Are you sure you want to reset your password? An email will be sent to {user.email}.
-                  </p>
-                </h3>
-                <div className="flex justify-center gap-4">
-                  <Button
-                    className='bg-red-600'
-                    onClick={handlePasswordReset}
-                  >
-                    Yes, send email
-                  </Button>
-                  <Button
-                    className='bg-gray-500'
-                    onClick={() => setShowModal(false)}
-                  >
-                    <p>
-                      No, cancel
-                    </p>
-                  </Button>
-                </div>
-              </div>
-            </Modal.Body>
-          </Modal>
-
+          <ResetPassword
+            showModal={showResetPasswordModal}
+            setShowModal={setShowResetPasswordModal}
+          />
+          <Logout showModal={showLogoutModal} setShowModal={setShowLogoutModal} handleLogout={handleLogout} />
         </>
       ) : (
         <p>No email yet. Please sign up.</p>

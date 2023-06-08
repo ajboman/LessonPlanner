@@ -1,5 +1,6 @@
-import { Card, Button, Modal } from 'flowbite-react';
+import { Card, Button } from 'flowbite-react';
 import { useEffect, useState } from 'react';
+import LessonDelete from '../components/LessonDelete';
 
 const Lessons = ({ allLessons, onDeleteLesson }) => {
   const [lessons, setLessons] = useState([]);
@@ -28,10 +29,14 @@ const Lessons = ({ allLessons, onDeleteLesson }) => {
           <p>No lessons saved yet.</p>
         ) : (
           lessons.map((lesson) => (
-            <Card key={lesson.id} className="relative overflow-y-auto max-h-96" style={{backgroundColor: "transparent"}}>
-              <Button 
+            <Card
+              key={lesson.id}
+              className="relative overflow-y-auto max-h-96"
+              style={{ backgroundColor: 'transparent' }}
+            >
+              <Button
                 onClick={() => handleOpenModal(lesson.id)}
-                className="absolute top-2 right-2 bg-red-500 hover:bg-transparent text-red-500 hover:text-red-500 font-bold py-1 px-2 rounded"
+                className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-red-500 hover:text-white font-bold py-1 px-2 rounded"
                 aria-label={`Delete lesson ${lesson.id}`}
                 variant="danger"
                 size="sm"
@@ -45,40 +50,12 @@ const Lessons = ({ allLessons, onDeleteLesson }) => {
           ))
         )}
       </div>
-      <Modal
-        onClose={() => setShowModal(false)}
-        popup
-        size="md"
-        show={showModal}
-        className='centered-modal'
-      >
-        <Modal.Header />
-        <Modal.Body>
-          <div className="text-center">
-            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-              <p>
-                Are you sure you want to delete this lesson?
-              </p>
-            </h3>
-            <div className="flex justify-center gap-4">
-              <Button
-                className='bg-red-500'
-                onClick={() => handleDeleteLesson(lessonToDelete)}
-              >
-                Yes, I'm sure
-              </Button>
-              <Button
-                className='bg-gray-500'
-                onClick={() => setShowModal(false)}
-              >
-                <p>
-                  No, cancel
-                </p>
-              </Button>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
+      <LessonDelete
+        showModal={showModal}
+        setShowModal={setShowModal}
+        handleDeleteLesson={handleDeleteLesson}
+        lessonToDelete={lessonToDelete}
+      />
     </div>
   );
 };
