@@ -73,7 +73,7 @@ input[type="text"] {
 }
 
 .textarea {
-  @apply p-2 w-full h-28 box-border mb-5 resize-y text-text bg-secondary placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg rounded-lg;
+  @apply p-2 w-full h-28 box-border mb-5 resize-none text-text bg-secondary placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg rounded-lg;
   backface-visibility: hidden;
 }
 

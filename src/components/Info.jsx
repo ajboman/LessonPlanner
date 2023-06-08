@@ -7,14 +7,14 @@ const Info = () => {
         Plan Lessons Quick and Easy
       </h1>
       <h2 className='text-lg font-medium space-y-2'>
-        <p>Provide as many details as you need.</p>
-        <p>More details will result in a more precise plan.</p>
-        <p>Login to save the Lesson Plan and view it in the Lessons page.</p>
-        <p>Verify your email for longer responses.</p>
-        <p>Example will not affect your lesson.</p>
+        Provide as many details as you need.<br />
+        More details will result in a more precise plan.<br />
+        Login to save the Lesson Plan and view it in the Lessons page.<br />
+        Verify your email for longer responses.<br />
+        Example will not affect your lesson.
       </h2>
     </header>
-  )
+  );
 };
 
 export default Info;

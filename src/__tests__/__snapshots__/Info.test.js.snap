@@ -3,25 +3,25 @@
 exports[`Info component renders correctly 1`] = `
 <div>
   <header
-    class="w-full flex justify-center items-center flex-col"
+    class="w-full flex flex-col items-center justify-center py-12 px-6 text-center bg-gradient-to-r from-secondary to-accent text-text rounded-lg shadow-xl"
   >
     <h1
-      class="head_text"
+      class="text-5xl font-bold mb-6"
     >
       Plan Lessons Quick and Easy
     </h1>
     <h2
-      class="desc"
+      class="text-lg font-medium space-y-2"
     >
-      Provide as many details as you need. 
+      Provide as many details as you need.
       <br />
-      More details will result in a more precise plan. 
+      More details will result in a more precise plan.
       <br />
-      Login to save the Lesson Plan and view it in the Lessons page. 
+      Login to save the Lesson Plan and view it in the Lessons page.
       <br />
-      Verify your email for longer responses. 
+      Verify your email for longer responses.
       <br />
-      Examples will not affect your lesson.
+      Example will not affect your lesson.
     </h2>
   </header>
 </div>
