@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
-import { Button } from 'flowbite-react';
 import { useContext } from 'react';
+import { Button, Navbar as Flowbar } from 'flowbite-react';
+import { Link } from 'react-router-dom';
 import UserContext from '../services/UserContext';
 
 const Navbar = ({ openLogin }) => {
@@ -8,40 +8,47 @@ const Navbar = ({ openLogin }) => {
 	const isAnonymous = user ? user.isAnonymous : true;
 
 	return (
-		<header className="w-full flex justify-center items-center flex-col p-5">
-			<nav className='flex justify-between items-center w-full mb-10 pt-3'>
-				<div className="text-2xl text-black">Lesson Planner</div>
-				<div className="link-buttons-container">
-					<Link to="/plan" className='text-white'>
-						<Button className="link-button">Plan</Button>
-					</Link>
-					<Link to="/lessons" className='text-white'>
-						<Button className="link-button"> Lessons</Button>
-					</Link>
-
-				</div>
+		<div className='w-full fixed top-0 z-10'>
+			<Flowbar fluid style={{backgroundColor: 'gray'}} >
+				<Flowbar.Brand>
+					<div className="text-2xl text-black">Lesson Planner</div>
+				</Flowbar.Brand>
+				<div className="flex-grow"></div>
+				<Flowbar.Link as={Link} to="/plan">
+					<Button className="m-2 bg-gray-500">
+						Plan
+					</Button>
+				</Flowbar.Link>
+				<Flowbar.Link as={Link} to="/lessons">
+					<Button className="m-2 bg-gray-500">
+						Lessons
+					</Button>
+				</Flowbar.Link>
 				{isAnonymous ? (
 					<Button
-						className="link-button"
+						className="m-2 bg-gray-500"
 						onClick={openLogin}
 					>
 						Login
 					</Button>
 				) : (
-					<Link to="/profile" className='text-white'>
-						<Button className="link-button"> Profile </Button>
-					</Link>
+					<Flowbar.Link as={Link} to="/profile">
+						<Button className="m-2 bg-gray-500">
+							Profile
+						</Button>
+					</Flowbar.Link>
 				)}
+				<div className="flex-grow"></div>
 				<Button
 					type='button'
 					onClick={() => window.open('https://github.com/ajboman/LessonPlanner')}
-					className='black_btn'
+					className='black_btn m-2'
 				>
 					GitHub
 				</Button>
-			</nav>
-		</header>
-	)
-}
+			</Flowbar>
+		</div>
+	);
+};
 
 export default Navbar;
