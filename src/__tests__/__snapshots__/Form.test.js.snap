@@ -78,7 +78,7 @@ exports[`Form component renders correctly 1`] = `
         class="text-sm font-medium text-gray-900 dark:text-gray-300"
         data-testid="flowbite-label"
       >
-        ClassSize
+        Class Size
         :
         <div
           class="flex"
@@ -100,7 +100,7 @@ exports[`Form component renders correctly 1`] = `
         class="text-sm font-medium text-gray-900 dark:text-gray-300"
         data-testid="flowbite-label"
       >
-        LearningObjectives
+        Learning Objectives
         :
         <textarea
           class="block w-full rounded-lg border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 textarea"
@@ -112,7 +112,7 @@ exports[`Form component renders correctly 1`] = `
         class="text-sm font-medium text-gray-900 dark:text-gray-300"
         data-testid="flowbite-label"
       >
-        ResourcesAvailable
+        Resources Available
         :
         <textarea
           class="block w-full rounded-lg border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 textarea"
@@ -124,7 +124,7 @@ exports[`Form component renders correctly 1`] = `
         class="text-sm font-medium text-gray-900 dark:text-gray-300"
         data-testid="flowbite-label"
       >
-        TeachingStyle
+        Teaching Style
         :
         <textarea
           class="block w-full rounded-lg border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 textarea"
@@ -136,7 +136,7 @@ exports[`Form component renders correctly 1`] = `
         class="text-sm font-medium text-gray-900 dark:text-gray-300"
         data-testid="flowbite-label"
       >
-        AssessmentMethods
+        Assessment Methods
         :
         <textarea
           class="block w-full rounded-lg border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 textarea"
@@ -148,7 +148,7 @@ exports[`Form component renders correctly 1`] = `
         class="text-sm font-medium text-gray-900 dark:text-gray-300"
         data-testid="flowbite-label"
       >
-        PriorKnowledge
+        Prior Knowledge
         :
         <textarea
           class="block w-full rounded-lg border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 textarea"
@@ -160,7 +160,7 @@ exports[`Form component renders correctly 1`] = `
         class="text-sm font-medium text-gray-900 dark:text-gray-300"
         data-testid="flowbite-label"
       >
-        StudentNeeds
+        Student Needs
         :
         <textarea
           class="block w-full rounded-lg border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 textarea"
@@ -172,7 +172,7 @@ exports[`Form component renders correctly 1`] = `
         class="text-sm font-medium text-gray-900 dark:text-gray-300"
         data-testid="flowbite-label"
       >
-        ExtraOptions
+        Extra Options
         :
         <textarea
           class="block w-full rounded-lg border disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500 textarea"
@@ -181,13 +181,17 @@ exports[`Form component renders correctly 1`] = `
         />
       </label>
       <button
-        class="text-white bg-cyan-700 border border-transparent hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-300 disabled:hover:bg-cyan-700 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800 dark:disabled:hover:bg-cyan-600 focus:!ring-2 group flex h-min items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-lg mb-10 bg-black col-span-full hover:bg-gray-600"
+        class="text-white bg-cyan-700 border border-transparent hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-300 disabled:hover:bg-cyan-700 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800 dark:disabled:hover:bg-cyan-600 focus:!ring-2 group flex h-min items-center justify-center p-0.5 text-center font-medium focus:z-10 rounded-lg mb-10 col-span-full bg-gradient-to-r from-accent to-primary text-white hover:from-primary hover:to-accent transition-all duration-500 ease-linear relative overflow-hidden"
         type="submit"
       >
         <span
           class="flex items-center rounded-md text-sm px-4 py-2"
         >
           Submit
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-accent to-primary transform translate-x-full transition-transform duration-500 ease-linear"
+            style="z-index: -1;"
+          />
         </span>
       </button>
     </form>

@@ -9,7 +9,7 @@ const Lessons = ({ allLessons, onDeleteLesson }) => {
 
   const handleDeleteLesson = (lessonId) => {
     onDeleteLesson(lessonId);
-    setShowModal(false);  
+    setShowModal(false);
   };
 
   const handleOpenModal = (lessonId) => {
@@ -22,28 +22,33 @@ const Lessons = ({ allLessons, onDeleteLesson }) => {
   }, [allLessons]);
 
   return (
-    <div>
-      <h1 className="mb-4 text-xl font-bold">Saved Lessons</h1>
+    <div className="p-4">
+      <h1 className="mb-4 text-3xl font-bold text-text dark:text-gray-100">Saved Lessons</h1>
       <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
         {lessons.length === 0 ? (
-          <p>No lessons saved yet.</p>
+          <p className="text-center text-lg font-medium text-gray-600">No lessons saved yet.</p>
         ) : (
           lessons.map((lesson) => (
             <Card
               key={lesson.id}
-              className="relative overflow-y-auto max-h-96"
-              style={{ backgroundColor: 'transparent' }}
+              className="relative overflow-y-auto max-h-96 rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:scale-105"
+              style={{
+                background: 'linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%)',
+                color: 'var(--primary)',
+                scrollbarWidth: 'thin',
+                scrollbarColor: 'var(--primary) var(--secondary)',
+              }}
             >
               <Button
                 onClick={() => handleOpenModal(lesson.id)}
-                className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-red-500 hover:text-white font-bold py-1 px-2 rounded"
+                className="absolute top-2 right-2 bg-accent hover:bg-accent_hover text-white font-bold py-1 px-2 rounded-full transition-colors duration-300 ease-in-out"
                 aria-label={`Delete lesson ${lesson.id}`}
                 variant="danger"
                 size="sm"
               >
                 <span className="text-lg">✕</span>
               </Button>
-              <div className="font-normal text-gray-900 dark:text-gray-400 pl-2 whitespace-pre-wrap">
+              <div className="font-medium text-text dark:text-gray-400 pl-2 whitespace-pre-wrap">
                 {lesson.lesson}
               </div>
             </Card>

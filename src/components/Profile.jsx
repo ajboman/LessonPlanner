@@ -36,36 +36,37 @@ const Profile = () => {
   };
 
   return (
-    <div className="p-6 w-full bg-gray-800 text-white">
+    <div className="p-6 w-full bg-primary text-white rounded-lg shadow-lg">
+      <h2 className="text-3xl font-bold mb-4">Profile</h2>
       {user && user.email ? (
-        <>
-          <h3>Email: {user.email}</h3>
-          {user.emailVerified ? (
-            <p>Email verified ✔️</p>
-          ) : (
-            <p>Verified: Email has been sent. May Appear in Spam Folder.</p>
-          )}
-          <Button
-            onClick={() => setShowResetPasswordModal(true)}
-            className="bg-blue-600 hover:bg-blue-700 mt-2"
-          >
-            Reset Password
-          </Button>
-          <Button
-            onClick={() => setShowLogoutModal(true)}
-            className="bg-red-600 hover:bg-red-700 mt-4"
-          >
-            Logout
-          </Button>
+        <div className="space-y-3">
+          <h3 className="text-xl font-medium">Email: <span className="font-light">{user.email}</span></h3>
+          <p className="text-lg">
+            {user.emailVerified ? 'Email verified ✔️' : 'Verification: Email has been sent. May Appear in Spam Folder.'}
+          </p>
+          <div className="space-y-2">
+            <Button
+              onClick={() => setShowResetPasswordModal(true)}
+              className="bg-button hover:bg-button_hover w-full py-2 text-lg rounded-lg"
+            >
+              Reset Password
+            </Button>
+            <Button
+              onClick={() => setShowLogoutModal(true)}
+              className="bg-red-600 hover:bg-red-700 w-full py-2 text-lg rounded-lg"
+            >
+              Logout
+            </Button>
+          </div>
 
           <ResetPassword
             showModal={showResetPasswordModal}
             setShowModal={setShowResetPasswordModal}
           />
           <Logout showModal={showLogoutModal} setShowModal={setShowLogoutModal} handleLogout={handleLogout} />
-        </>
+        </div>
       ) : (
-        <p>No email yet. Please sign up.</p>
+        <p className="text-xl">No email yet. Please sign up.</p>
       )}
     </div>
   );

@@ -19,29 +19,31 @@ const Navbar = ({ openLogin }) => {
       ></div>
       <Flowbar fluid style={{ backgroundColor: 'transparent' }}>
         <Flowbar.Brand>
-          <div className="text-2xl text-secondary">Lesson Planner</div>
+          <div className="text-2xl text-text">Lesson Planner</div>
         </Flowbar.Brand>
         <div className="flex-grow"></div>
         <Flowbar.Link as={Link} to="/plan">
-          <Button className="m-2 bg-button hover:bg-button_hover">
+          <Button className="m-2 bg-button hover:bg-button_hover" color={'var(--text)'}>
             Plan
           </Button>
         </Flowbar.Link>
         <Flowbar.Link as={Link} to="/lessons">
-          <Button className="m-2 bg-button hover:bg-button_hover">
+          <Button className="m-2 bg-button hover:bg-button_hover" color={'var(--text)'}>
             Lessons
           </Button>
         </Flowbar.Link>
         {isAnonymous ? (
           <Button
-            className="m-2 bg-button hover:bg-button_hover"
+            className="m-2 bg-button hover:bg-button_hover" 
+            color={'var(--text)'}
             onClick={openLogin}
           >
             Login
           </Button>
         ) : (
           <Flowbar.Link as={Link} to="/profile">
-            <Button className="m-2 bg-button hover:bg-button_hover">
+            <Button className="m-2 bg-button hover:bg-button_hover"
+            color={'var(--text)'}>
               Profile
             </Button>
           </Flowbar.Link>
@@ -53,6 +55,7 @@ const Navbar = ({ openLogin }) => {
             window.open('https://github.com/ajboman/LessonPlanner')
           }
           className="m-2 bg-button hover:bg-button_hover"
+          color={'var(--text)'}
         >
           GitHub
         </Button>

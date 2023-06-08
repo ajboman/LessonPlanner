@@ -187,7 +187,16 @@ const Form = ({ saveLesson }) => {
             className={index % 2 === 0 ? "md:col-span-2" : ""}
           />
         ))}
-        <Button type="submit" className='mb-10 bg-black col-span-full hover:bg-gray-600'>{buttonText}</Button>
+<Button 
+  type="submit"
+  className="mb-10 col-span-full bg-gradient-to-r from-accent to-primary text-white hover:from-primary hover:to-accent transition-all duration-500 ease-linear relative overflow-hidden"
+>
+  {buttonText}
+  <div 
+    className="absolute inset-0 bg-gradient-to-r from-accent to-primary transform translate-x-full transition-transform duration-500 ease-linear"
+    style={{ zIndex: -1 }}
+  />
+</Button>
       </form>
       {showPopup && (
         <Popup response={apiResponse} isVisible={showPopup} onClose={closePopup} onSave={handleSave} />

@@ -6,12 +6,13 @@
   Note: The styles for this gradient grid background is heavily inspired by the creator of this amazing site (https://dub.sh) – all credits go to them! 
 */
 :root {
-  --text: #000000;
+  --text: #1d004d;
   --button: #8b81a2;
   --button-hover: #7c7288;
-  --primary: #675d7e;
-  --secondary: #afa6ba;
+  --primary: #3c344e;
+  --secondary: #c5bad3;
   --accent: #7f68b1;
+  --accent-hover: #9b78e6;
 }
 
 .main {
@@ -66,13 +67,14 @@
 }
 
 
-
 input[type="text"] {
-  @apply p-2 w-full h-full box-border bg-gray-300 placeholder-gray-500;
+  @apply p-2 w-full h-full box-border text-text bg-secondary placeholder-gray-500 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg rounded-lg;
+  backface-visibility: hidden;
 }
 
 .textarea {
-  @apply p-2 w-full h-28 box-border mb-5 resize-y bg-gray-300 placeholder-gray-600;
+  @apply p-2 w-full h-28 box-border mb-5 resize-none text-text bg-secondary placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg rounded-lg;
+  backface-visibility: hidden;
 }
 
 
@@ -99,7 +101,23 @@ input[type="text"] {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  max-width: 400px; /* or any size you'd like */
+  max-width: 400px;
   width: 100%;
   z-index: 10;
+  background-color: var(--button);
+  border-radius: 0.5rem;
+}
+
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--accent);
+  border-radius: 20px;
 }
