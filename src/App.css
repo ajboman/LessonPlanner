@@ -101,10 +101,13 @@ input[type="text"] {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  max-width: 400px; /* or any size you'd like */
+  max-width: 400px;
   width: 100%;
   z-index: 10;
+  background-color: var(--button);
+  border-radius: 0.5rem;
 }
+
 
 ::-webkit-scrollbar {
   width: 8px;
