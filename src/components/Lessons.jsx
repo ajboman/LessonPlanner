@@ -23,7 +23,7 @@ const Lessons = ({ allLessons, onDeleteLesson }) => {
 
   return (
     <div className="p-4">
-      <h1 className="mb-4 text-3xl font-bold text-gray-900 dark:text-gray-100">Saved Lessons</h1>
+      <h1 className="mb-4 text-3xl font-bold text-text dark:text-gray-100">Saved Lessons</h1>
       <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
         {lessons.length === 0 ? (
           <p className="text-center text-lg font-medium text-gray-600">No lessons saved yet.</p>
@@ -31,7 +31,7 @@ const Lessons = ({ allLessons, onDeleteLesson }) => {
           lessons.map((lesson) => (
             <Card
               key={lesson.id}
-              className="relative overflow-y-auto max-h-96 rounded-lg p-4 shadow-md transition-all duration-300 ease-in-out transform hover:scale-105"
+              className="relative overflow-y-auto max-h-96 rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:scale-105"
               style={{
                 background: 'linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%)',
                 color: 'var(--primary)',
