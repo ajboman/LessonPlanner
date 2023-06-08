@@ -18,7 +18,6 @@ const Login = ({ isOpen, closeModal }) => {
     const auth = getAuth();
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      // Login successful
       const user = userCredential.user;
       console.log('Logged in user:', user);
       closeModal();
@@ -33,19 +32,14 @@ const Login = ({ isOpen, closeModal }) => {
 
     const auth = getAuth();
     try {
-      // Create an email/password credential
       const emailCredential = EmailAuthProvider.credential(email, password);
 
-      // Link the anonymous account with the email credential
-      // Note that this will fail if the anonymous account has already been linked to another email address
       await linkWithCredential(auth.currentUser, emailCredential);
 
-      // Sign-up (linking) successful
       const user = auth.currentUser;
       console.log('User upgraded:', user);
-      await sendVerificationEmail(user); // Send email verification
+      await sendVerificationEmail(user);
 
-      // Update email field in Firestore
       await updateUserDocument(user.uid, { email: user.email, type: 'basic' });
 
       closeModal();
@@ -65,22 +59,24 @@ const Login = ({ isOpen, closeModal }) => {
   }
 
   return (
-    <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
       <div className="bg-white p-6 rounded-lg w-96">
-        <button
-          className="absolute top-2 right-2 p-2 rounded-full bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 focus:outline-none"
-          onClick={closeModal}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+        <div className="flex justify-end">
+          <Button
+            className="relative rounded-full bg-gray-400 hover:bg-gray-500 focus:bg-gray-500 focus:outline-none"
+            onClick={closeModal}
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </Button>
+        </div>
         <h3 className="text-xl font-medium text-gray-900">
           {isLogin ? 'Login' : 'Create an account'}
         </h3>
@@ -109,7 +105,7 @@ const Login = ({ isOpen, closeModal }) => {
               />
             </div>
             <div>
-              <Button type="submit" className="bg-cyan-600 text-white rounded-md">
+              <Button type="submit" className="bg-cyan-600 text-white rounded-md hover:bg-cyan-700">
                 Sign in
               </Button>
             </div>
@@ -144,7 +140,7 @@ const Login = ({ isOpen, closeModal }) => {
               />
             </div>
             <div>
-              <Button type="submit" className="bg-green-500 text-white rounded-md">
+              <Button type="submit" className="bg-green-500 hover:bg-green-600 text-white rounded-md">
                 Sign up
               </Button>
             </div>

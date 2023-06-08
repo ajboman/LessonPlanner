@@ -83,7 +83,7 @@ const App = () => {
         });
     }
   };
-  
+
 
   const deleteLesson = (lessonId) => {
     deleteLessonDocument(lessonId)
@@ -101,12 +101,14 @@ const App = () => {
           <div className='main' />
           <div className='app'>
             <Navbar openLogin={openLogin} />
-            <Routes>
-              <Route path="/" element={<RedirectToPlan />} />
-              <Route path="/plan" element={<><Info /><Form saveLesson={saveLesson} /></>} />
-              <Route path="/lessons" element={<Lessons allLessons={allLessons} onDeleteLesson={deleteLesson} />} />
-              <Route path="/profile" element={<Profile />} />
-            </Routes>
+            <div className='pt-24 w-full max-w-7xl mx-auto sm:px-16 px-6'>
+              <Routes>
+                <Route path="/" element={<RedirectToPlan />} />
+                <Route path="/plan" element={<><Info /><Form saveLesson={saveLesson} /></>} />
+                <Route path="/lessons" element={<Lessons allLessons={allLessons} onDeleteLesson={deleteLesson} />} />
+                <Route path="/profile" element={<Profile />} />
+              </Routes>
+            </div>
             {isLoginOpen && (
               <Login isOpen={isLoginOpen} closeModal={closeLogin} />
             )}

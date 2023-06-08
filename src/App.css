@@ -58,10 +58,15 @@
   }
 }
 
+::marker {
+  content: ""; /* Removes the bullet points */
+}
+
+
 /* Tailwind Styles */
 
 .app {
-  @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6;
+  @apply relative z-10 flex justify-center items-center flex-col ;
 }
 
 .black_btn {
@@ -100,27 +105,6 @@ input[type="text"] {
 
 
 
-.link-buttons-container {
-  display: flex; /* Add flex display */
-  gap: 4px; /* Add gap between buttons */
-}
-
-.link-button {
-  border: none;
-  background-color: gray;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 4px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.link-button:hover {
-  background-color: darkgray;
-}
-
-
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -136,4 +120,14 @@ input[type="text"] {
 .popup-container {
   background-color: white;
   padding: 20px;
+}
+
+.centered-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 400px; /* or any size you'd like */
+  width: 100%;
+  z-index: 10;
 }

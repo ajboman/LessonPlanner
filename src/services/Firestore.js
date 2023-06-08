@@ -9,7 +9,6 @@ export const createUserDocument = async (user) => {
     const userRef = doc(db, "users", user.uid);
     const docSnap = await getDoc(userRef);
 
-    // If the document does not exist, create a new one
     if (!docSnap.exists()) {
         await setDoc(userRef, {
             email: user.email,
