@@ -16,23 +16,11 @@ const Login = ({ isOpen, closeModal }) => {
     event.preventDefault();
   
     const auth = getAuth();
-    const anonymousUser = auth.currentUser;
-  
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       console.log('Logged in user:', user);
       closeModal();
-  
-      if (anonymousUser && anonymousUser.isAnonymous) {
-        const anonymousUserId = anonymousUser.uid;
-  
-        await anonymousUser.delete(); 
-        console.log('Deleted anonymous user:', anonymousUserId);
-  
-        await deleteUserDocument(anonymousUserId);
-        console.log('Deleted user document:', anonymousUserId);
-      }
     } catch (error) {
       console.error('Error logging in:', error);
       setErrorMessage('Incorrect email or password. Please try again.');

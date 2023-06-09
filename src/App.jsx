@@ -70,7 +70,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (user && user.uid) {
+    if (user && user.uid && !user.isAnonymous) {
       readAllUserLessons(user.uid)
         .then((lessons) => {
           const formattedLessons = lessons.map((lesson) => ({
@@ -114,7 +114,7 @@ const App = () => {
         <main>
           <div className='main' />
           <div className='app'>
-          <Navbar openLogin={openLogin} toggleTheme={toggleTheme} currentTheme={theme} />
+            <Navbar openLogin={openLogin} toggleTheme={toggleTheme} currentTheme={theme} />
             <div className='pt-24 w-full max-w-7xl mx-auto sm:px-16 px-6'>
               <Routes>
                 <Route path="/" element={<RedirectToPlan />} />
