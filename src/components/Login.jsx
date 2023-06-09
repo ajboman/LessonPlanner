@@ -40,7 +40,7 @@ const Login = ({ isOpen, closeModal }) => {
       console.log('User upgraded:', user);
       await sendVerificationEmail(user);
 
-      await updateUserDocument(user.uid, { email: user.email, type: 'basic' });
+      await updateUserDocument(user.uid, { email: user.email, type: 'basic', clicksRemaining: 2 });
 
       closeModal();
     } catch (error) {

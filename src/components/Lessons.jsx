@@ -21,6 +21,13 @@ const Lessons = ({ allLessons, onDeleteLesson }) => {
     setLessons(allLessons);
   }, [allLessons]);
 
+  const cleanLessonText = (lessonText) => {
+    if (lessonText.startsWith('\n\n')) {
+      return lessonText.slice(2);
+    }
+    return lessonText;
+  };
+
   return (
     <div className="p-4">
       <h1 className="mb-4 text-3xl font-bold text-text dark:text-gray-100">Saved Lessons</h1>
@@ -48,8 +55,8 @@ const Lessons = ({ allLessons, onDeleteLesson }) => {
               >
                 <span className="text-lg">✕</span>
               </Button>
-              <div className="font-medium text-text dark:text-gray-400 pl-2 whitespace-pre-wrap">
-                {lesson.lesson}
+              <div className="font-medium text-text dark:text-gray-400 pt-4 whitespace-pre-wrap">
+                {cleanLessonText(lesson.lesson)}
               </div>
             </Card>
           ))
