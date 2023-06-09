@@ -38,7 +38,9 @@ exports[`Lessons component renders correctly 1`] = `
           </button>
           <div
             class="font-medium text-text dark:text-gray-400 pl-2 whitespace-pre-wrap"
-          />
+          >
+            Lesson 1
+          </div>
         </div>
       </div>
       <div
@@ -66,7 +68,9 @@ exports[`Lessons component renders correctly 1`] = `
           </button>
           <div
             class="font-medium text-text dark:text-gray-400 pl-2 whitespace-pre-wrap"
-          />
+          >
+            Lesson 2
+          </div>
         </div>
       </div>
       <div
@@ -94,7 +98,9 @@ exports[`Lessons component renders correctly 1`] = `
           </button>
           <div
             class="font-medium text-text dark:text-gray-400 pl-2 whitespace-pre-wrap"
-          />
+          >
+            Lesson 3
+          </div>
         </div>
       </div>
     </div>
