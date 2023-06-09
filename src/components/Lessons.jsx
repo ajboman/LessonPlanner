@@ -1,11 +1,13 @@
 import { Card, Button } from 'flowbite-react';
 import { useEffect, useState } from 'react';
+import { BsClipboard, BsCheckCircle } from 'react-icons/bs';
 import LessonDelete from '../components/LessonDelete';
 
 const Lessons = ({ allLessons, onDeleteLesson }) => {
   const [lessons, setLessons] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [lessonToDelete, setLessonToDelete] = useState(null);
+  const [copiedLessonId, setCopiedLessonId] = useState(null);
 
   const handleDeleteLesson = (lessonId) => {
     onDeleteLesson(lessonId);
@@ -15,6 +17,15 @@ const Lessons = ({ allLessons, onDeleteLesson }) => {
   const handleOpenModal = (lessonId) => {
     setLessonToDelete(lessonId);
     setShowModal(true);
+  };
+
+  const handleCopyToClipboard = (lessonId, lessonText) => {
+    navigator.clipboard.writeText(lessonText);
+    setCopiedLessonId(lessonId);
+
+    setTimeout(() => {
+      setCopiedLessonId(null);
+    }, 3000);
   };
 
   useEffect(() => {
@@ -46,6 +57,11 @@ const Lessons = ({ allLessons, onDeleteLesson }) => {
                 scrollbarColor: 'var(--primary) var(--secondary)',
               }}
             >
+              {copiedLessonId === lesson.id && (
+                <div className="absolute top-2 left-2 text-primary">
+                  <BsCheckCircle size={20} />
+                </div>
+              )}
               <Button
                 onClick={() => handleOpenModal(lesson.id)}
                 className="absolute top-2 right-2 bg-accent hover:bg-accent_hover text-white font-bold py-1 px-2 rounded-full transition-colors duration-300 ease-in-out"
@@ -58,6 +74,18 @@ const Lessons = ({ allLessons, onDeleteLesson }) => {
               <div className="font-medium text-text dark:text-gray-400 pt-4 whitespace-pre-wrap">
                 {cleanLessonText(lesson.lesson)}
               </div>
+              <Button
+                onClick={() => handleCopyToClipboard(lesson.id, lesson.lesson)}
+                className="absolute top-2 left-2 bg-accent hover:bg-accent_hover text-white font-bold py-1 px-2 rounded-full transition-colors duration-300 ease-in-out"
+                aria-label={`Copy lesson ${lesson.id}`}
+                size="sm"
+              >
+                {copiedLessonId === lesson.id ? (
+                  <BsCheckCircle size={20} />
+                ) : (
+                  <BsClipboard size={20} />
+                )}
+              </Button>
             </Card>
           ))
         )}
