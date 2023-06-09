@@ -85,7 +85,7 @@ const Form = ({ saveLesson }) => {
 
     const currentDate = new Date();
     if (!data.last_click_date || !isSameDay(data.last_click_date.toDate(), currentDate)) {
-      data.clicksRemaining = getMaxClicks(data.accountType);
+      data.clicksRemaining = getMaxClicks(data.type);
       data.last_click_date = currentDate;
       await updateUserData(uid, data.clicksRemaining, data.totalSubmits, data.last_click_date);
     }
@@ -145,7 +145,7 @@ const Form = ({ saveLesson }) => {
       const uid = auth.currentUser.uid;
 
       const userData = await getUserData(uid);
-      const accountType = userData.accountType;
+      const accountType = userData.type;
       const clicksRemaining = userData.clicksRemaining;
 
       let max_tokens;
