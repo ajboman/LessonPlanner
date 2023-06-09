@@ -174,7 +174,7 @@ const Form = ({ saveLesson }) => {
       setShowPopup(true);
 
       const newTotalSubmits = (userData.totalSubmits || 0) + 1;
-      const newClicks = userData.clicksRemaining - 1;
+      const newClicks = clicksRemaining - 1;
       await updateUserData(uid, newClicks, newTotalSubmits, userData.last_click_date);
 
     } catch (error) {
@@ -222,7 +222,7 @@ const Form = ({ saveLesson }) => {
         <Popup response={apiResponse} isVisible={showPopup} onClose={closePopup} onSave={handleSave} />
       )}
       {isLoading && (
-        <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-gray-500 bg-opacity-75">
+        <div className="fixed top-0 left-0 w-screen h-screen flex z-50 justify-center items-center bg-gray-500 bg-opacity-75">
           <img src={loaderSvg} alt="Loading" />
         </div>
       )}
