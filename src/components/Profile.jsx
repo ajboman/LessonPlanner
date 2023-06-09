@@ -15,7 +15,7 @@ const Profile = () => {
     const verifyUserEmail = async () => {
       const userData = await readUserDocument(user.uid);
       if (user.emailVerified && !userData.verified) {
-        await updateUserDocument(user.uid, { verified: true, type: 'verified' });
+        await updateUserDocument(user.uid, { verified: true, type: 'verified', clicksRemaining: 3 });
       }
     };
 
