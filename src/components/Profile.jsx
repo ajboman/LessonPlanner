@@ -5,12 +5,14 @@ import { Button } from 'flowbite-react';
 import { updateUserDocument, readUserDocument } from '../services/Firestore';
 import ResetPassword from '../components/ResetPassword';
 import Logout from '../components/Logout';
+import { sendVerificationEmail } from '../services/emailVerification'; 
 
 const Profile = () => {
   const user = useContext(UserContext);
   const [showResetPasswordModal, setShowResetPasswordModal] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [totalSubmits, setTotalSubmits] = useState(0);
+  const [resendButtonVisible, setResendButtonVisible] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,6 +46,18 @@ const Profile = () => {
       });
   };
 
+  const handleResendVerificationEmail = async () => {
+    const auth = getAuth();
+    try {
+      await sendVerificationEmail(auth.currentUser); 
+      console.log('Verification email sent successfully');
+      setResendButtonVisible(false);
+    } catch (error) {
+      console.error('Error sending verification email:', error);
+    }
+  };
+  
+
   return (
     <div className="p-6 w-full bg-primary text-white rounded-lg shadow-lg">
       <h2 className="text-3xl font-bold mb-4">Profile</h2>
@@ -53,7 +67,21 @@ const Profile = () => {
             Email: <span className="font-light">{user.email}</span>
           </h3>
           <p className="text-lg">
-            {user.emailVerified ? 'Email verified ✔️' : 'Verification: Email has been sent. May Appear in Spam Folder.'}
+            {user.emailVerified ? (
+              'Email verified ✔️'
+            ) : (
+              <>
+                Verification: Email has been sent. May Appear in Spam Folder.
+                {resendButtonVisible && (
+                  <Button
+                    onClick={handleResendVerificationEmail}
+                    className="bg-button hover:bg-button_hover w-full py-2 text-lg rounded-lg mt-2"
+                  >
+                    Resend Verification Email
+                  </Button>
+                )}
+              </>
+            )}
           </p>
           <p className="text-lg">Total Lessons Made: {totalSubmits}</p>
           <div className="space-y-2">
