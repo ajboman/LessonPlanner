@@ -28,6 +28,7 @@ const App = () => {
   const [allLessons, setAllLessons] = useState([]);
   const [user, setUser] = useState(null);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
 
   useEffect(() => {
@@ -46,6 +47,19 @@ const App = () => {
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
 
   const openLogin = () => {
     setIsLoginOpen(true);
@@ -100,7 +114,7 @@ const App = () => {
         <main>
           <div className='main' />
           <div className='app'>
-            <Navbar openLogin={openLogin} />
+          <Navbar openLogin={openLogin} toggleTheme={toggleTheme} currentTheme={theme} />
             <div className='pt-24 w-full max-w-7xl mx-auto sm:px-16 px-6'>
               <Routes>
                 <Route path="/" element={<RedirectToPlan />} />
