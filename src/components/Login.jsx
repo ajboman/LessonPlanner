@@ -14,7 +14,7 @@ const Login = ({ isOpen, closeModal }) => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-
+  
     const auth = getAuth();
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -26,6 +26,7 @@ const Login = ({ isOpen, closeModal }) => {
       setErrorMessage('Incorrect email or password. Please try again.');
     }
   };
+  
 
   const handleSignUp = async (event) => {
     event.preventDefault();

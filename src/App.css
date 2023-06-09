@@ -13,6 +13,23 @@
   --secondary: #c5bad3;
   --accent: #7f68b1;
   --accent-hover: #9b78e6;
+  --text-dark: #ddd1ec; 
+  --button-dark: #3c344e; 
+  --button-hover-dark: #7f68b1;
+  --primary-dark: #14033d; 
+  --secondary-dark: #260a49; 
+  --accent-dark: #b9aadd; 
+  --accent-hover-dark: #cbb3ff; 
+}
+
+.dark{
+  --text: var(--text-dark);
+  --button: var(--button-dark);
+  --button-hover: var(--button-hover-dark);
+  --primary: var(--primary-dark);
+  --secondary: var(--secondary-dark);
+  --accent: var(--accent-dark);
+  --accent-hover: var(--accent-hover-dark);
 }
 
 .main {
@@ -34,6 +51,11 @@
   height: 100%;
   top: 0;
 }
+
+.dark .main:before {
+  background: radial-gradient(circle, var(--accent-dark) 0, var(--primary-dark) 100%);
+}
+
 
 
 @media screen and (max-width: 640px) {
@@ -66,15 +88,24 @@
   @apply mt-5 text-lg text-gray-600 sm:text-xl text-center max-w-2xl;
 }
 
-
 input[type="text"] {
   @apply p-2 w-full h-full box-border text-text bg-secondary placeholder-gray-500 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg rounded-lg;
   backface-visibility: hidden;
+  color: var(--text);
+}
+
+.dark input[type="text"]::placeholder {
+  color: var(--accent-dark);
 }
 
 .textarea {
   @apply p-2 w-full h-28 box-border mb-5 resize-none text-text bg-secondary placeholder-gray-600 focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg rounded-lg;
   backface-visibility: hidden;
+  color: var(--text);
+}
+
+.dark .textarea::placeholder {
+  color: var(--accent-dark);
 }
 
 
