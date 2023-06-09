@@ -10,8 +10,16 @@ const Profile = () => {
   const user = useContext(UserContext);
   const [showResetPasswordModal, setShowResetPasswordModal] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [totalSubmits, setTotalSubmits] = useState(0);
 
   useEffect(() => {
+    const fetchData = async () => {
+      const userData = await readUserDocument(user.uid);
+      if (userData) {
+        setTotalSubmits(userData.totalSubmits || 0);
+      }
+    };
+
     const verifyUserEmail = async () => {
       const userData = await readUserDocument(user.uid);
       if (user.emailVerified && !userData.verified) {
@@ -20,6 +28,7 @@ const Profile = () => {
     };
 
     if (user) {
+      fetchData();
       verifyUserEmail();
     }
   }, [user]);
@@ -28,7 +37,7 @@ const Profile = () => {
     const auth = getAuth();
     signOut(auth)
       .then(() => {
-        setShowLogoutModal(false); 
+        setShowLogoutModal(false);
       })
       .catch((error) => {
         console.error('Error logging out:', error);
@@ -40,10 +49,13 @@ const Profile = () => {
       <h2 className="text-3xl font-bold mb-4">Profile</h2>
       {user && user.email ? (
         <div className="space-y-3">
-          <h3 className="text-xl font-medium">Email: <span className="font-light">{user.email}</span></h3>
+          <h3 className="text-xl font-medium">
+            Email: <span className="font-light">{user.email}</span>
+          </h3>
           <p className="text-lg">
             {user.emailVerified ? 'Email verified ✔️' : 'Verification: Email has been sent. May Appear in Spam Folder.'}
           </p>
+          <p className="text-lg">Total Lessons Made: {totalSubmits}</p>
           <div className="space-y-2">
             <Button
               onClick={() => setShowResetPasswordModal(true)}
@@ -59,10 +71,7 @@ const Profile = () => {
             </Button>
           </div>
 
-          <ResetPassword
-            showModal={showResetPasswordModal}
-            setShowModal={setShowResetPasswordModal}
-          />
+          <ResetPassword showModal={showResetPasswordModal} setShowModal={setShowResetPasswordModal} />
           <Logout showModal={showLogoutModal} setShowModal={setShowLogoutModal} handleLogout={handleLogout} />
         </div>
       ) : (

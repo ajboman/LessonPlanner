@@ -133,10 +133,23 @@ const Form = ({ saveLesson }) => {
 
     let userData = await getUserData(uid);
     if (userData.clicksRemaining <= 0) {
-      setErrorMessage("You have reached your maximum daily clicks. Please come back tomorrow.");
+      let errorMessage = '';
+      switch (userData.type) {
+        case 'anonymous':
+          errorMessage = 'You have reached your maximum daily clicks. Please login for more.';
+          break;
+        case 'basic':
+          errorMessage = 'You have reached your maximum daily clicks. Please verify your account for more.';
+          break;
+        case 'verified':
+          errorMessage = 'You have reached your maximum daily clicks. Please come back tomorrow for more.';
+          break;
+        default:
+          errorMessage = 'You have reached your maximum daily clicks.';
+      }
+      setErrorMessage(errorMessage);
       return;
     }
-
     const prompt = createString(formData);
     setIsLoading(true);
 
