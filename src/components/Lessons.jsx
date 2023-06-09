@@ -55,7 +55,7 @@ const Lessons = ({ allLessons, onDeleteLesson }) => {
               >
                 <span className="text-lg">✕</span>
               </Button>
-              <div className="font-medium text-text dark:text-gray-400 pl-2 whitespace-pre-wrap">
+              <div className="font-medium text-text dark:text-gray-400 pt-4 whitespace-pre-wrap">
                 {cleanLessonText(lesson.lesson)}
               </div>
             </Card>
