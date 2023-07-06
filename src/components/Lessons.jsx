@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import LessonDelete from '../components/LessonDelete';
+import LessonDelete from './LessonDelete';
 import LessonCard from './LessonCard';
 import NoLessons from './NoLessons';
 import LessonPopup from './LessonPopup';
