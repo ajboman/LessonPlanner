@@ -12,6 +12,7 @@ const LessonPopup = ({ lesson, open, handleClose, onUpdateLesson, editedLesson, 
     if (isEditing && textareaRef.current) {
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+      textareaRef.current.focus();
     }
   }, [isEditing]);
 
@@ -19,23 +20,21 @@ const LessonPopup = ({ lesson, open, handleClose, onUpdateLesson, editedLesson, 
 
   const handleEditClick = () => {
     setIsEditing(true);
+    textareaRef.current.value = cleanLessonText(editedLesson);
   };
 
   const handleSaveClick = async () => {
     const { id, ...lessonData } = lesson;
-    const updatedLessonData = { ...lessonData, lesson: editedLesson };
+    const updatedLessonText = textareaRef.current.value;
+    const updatedLessonData = { ...lessonData, lesson: updatedLessonText };
     await updateLessonDocument(id, updatedLessonData);
     onUpdateLesson({ id, ...updatedLessonData });
+    setEditedLesson(updatedLessonText);
     setIsEditing(false);
   };
 
   const handleCancelClick = () => {
     setIsEditing(false);
-    setEditedLesson(lesson.lesson); 
-  };
-
-  const handleInputChange = (event) => {
-    setEditedLesson(event.target.value);
   };
 
   return (
@@ -55,8 +54,7 @@ const LessonPopup = ({ lesson, open, handleClose, onUpdateLesson, editedLesson, 
         {isEditing ? (
           <textarea
             ref={textareaRef}
-            value={editedLesson}
-            onChange={handleInputChange}
+            defaultValue={cleanLessonText(editedLesson)} 
             className="w-full"
             style={{
               color: 'var(--text)',
@@ -71,7 +69,6 @@ const LessonPopup = ({ lesson, open, handleClose, onUpdateLesson, editedLesson, 
           <div className="whitespace-pre-wrap">{cleanLessonText(editedLesson)}</div>
         )}
       </Modal.Body>
-
       <Modal.Footer style={{
         backgroundColor: 'var(--primary)',
       }}

@@ -23,19 +23,19 @@ const LessonCard = ({ lesson, handleDeleteLesson, handleCopyToClipboard, copiedL
       )}
       <Button
         onClick={() => handleDeleteLesson(lesson.id)}
-        className="absolute top-2 right-2 mx-2 bg-accent hover:bg-accent_hover text-white font-bold  rounded-full transition-colors duration-300 ease-in-out"
+        className="absolute top-2 right-2 mx-2 px-2 py-1 bg-accent hover:bg-accent_hover text-white font-bold  rounded-full transition-colors duration-300 ease-in-out"
         aria-label={`Delete lesson ${lesson.id}`}
         variant="danger"
         size="sm"
       >
         <span className="text-lg">✕</span>
       </Button>
-      <div className="font-medium overflow-y-auto text-text dark:text-gray-400 pt-4 whitespace-pre-wrap"style={{ width: '110%' }}>
+      <div className="font-medium overflow-y-auto text-text dark:text-gray-400 pt-6 whitespace-pre-wrap"style={{ width: '110%' }}>
         {cleanLessonText(lesson.lesson)}
       </div>
       <Button
         onClick={() => handleCopyToClipboard(lesson.id, lesson.lesson)}
-        className="absolute top-2 left-2 bg-accent hover:bg-accent_hover text-white font-bold py-1 rounded-full transition-colors duration-300 ease-in-out"
+        className="absolute top-2 left-2 px-2 bg-accent hover:bg-accent_hover text-white font-bold py-2 rounded-full transition-colors duration-300 ease-in-out"
         aria-label={`Copy lesson ${lesson.id}`}
         size="sm"
       >
