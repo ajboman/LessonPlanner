@@ -61,7 +61,7 @@ const Profile = () => {
   return (
     <div className="p-6 w-full bg-primary text-white rounded-lg shadow-lg">
       <h2 className="text-3xl font-bold mb-4">Profile</h2>
-      {user && user.email ? (
+      {user?.email ? (
         <div className="space-y-3">
           <h3 className="text-xl font-medium">
             Email: <span className="font-light">{user.email}</span>
