@@ -53,7 +53,7 @@ const Lessons = ({ allLessons, onDeleteLesson }) => {
 
   return (
     <div className="p-4">
-      <h1 className="mb-4 text-3xl font-bold text-text dark:text-gray-100">Saved Lessons</h1>
+      <h1 className="mb-4 text-3xl font-bold text-text dark:text-dark">Saved Lessons</h1>
       <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
         {lessons.length === 0 ? (
           <NoLessons />
