@@ -9,17 +9,17 @@ const Logout = ({ showModal, setShowModal, handleLogout }) => {
       show={showModal}
       className="centered-modal"
     >
-      <Modal.Header />
-      <Modal.Body>
+      <Modal.Header className='bg-secondary text-text' />
+      <Modal.Body className='bg-secondary text-text'>
         <div className="text-center">
-          <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+          <h3 className="mb-5 text-lg font-normal text-text">
             <p>Are you sure you want to logout?</p>
           </h3>
           <div className="flex justify-center gap-4">
             <Button className="bg-red-600 hover:bg-red-700" onClick={handleLogout}>
               Yes, Logout
             </Button>
-            <Button className="bg-gray-500 hover:bg-gray-600" onClick={() => setShowModal(false)}>
+            <Button className="bg-button hover:bg-button_hover" onClick={() => setShowModal(false)}>
               <p>No, cancel</p>
             </Button>
           </div>

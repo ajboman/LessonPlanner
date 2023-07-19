@@ -23,7 +23,7 @@ const LessonCard = ({ lesson, handleDeleteLesson, handleCopyToClipboard, copiedL
       )}
       <Button
         onClick={(e) => {
-          e.stopPropagation(); // stop event propagation
+          e.stopPropagation(); 
           handleDeleteLesson(lesson.id);
         }}
         className="absolute top-2 right-2 mx-2 px-2 py-1 bg-button hover:bg-button_hover text-white font-bold  rounded-full transition-colors duration-300 ease-in-out"
@@ -39,7 +39,7 @@ const LessonCard = ({ lesson, handleDeleteLesson, handleCopyToClipboard, copiedL
       </div>
       <Button
         onClick={(e) => {
-          e.stopPropagation(); // stop event propagation
+          e.stopPropagation(); 
           handleCopyToClipboard(lesson.id, lesson.lesson);
         }}
         className="absolute top-2 left-2 px-2 bg-button hover:bg-button_hover text-white font-bold py-2 rounded-full transition-colors duration-300 ease-in-out"
