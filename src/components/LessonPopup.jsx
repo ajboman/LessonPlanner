@@ -41,57 +41,31 @@ const LessonPopup = ({ lesson, open, handleClose, onUpdateLesson, editedLesson, 
     <Modal
       show={open}
       size="lg"
-      style={{
-        color: 'var(--text)',
-        backgroundColor: 'var(--primary)',
-      }}
+      className="text-text bg-primary"
     >
-      <Modal.Body style={{
-        backgroundColor: 'var(--secondary)',
-        maxHeight: '89vh',
-        overflowY: 'auto'
-      }}>
+      <Modal.Body className="bg-secondary min-h-[89vh] max-h-[89vh] overflow-y-auto">
         {isEditing ? (
           <textarea
             ref={textareaRef}
             defaultValue={cleanLessonText(editedLesson)} 
-            className="w-full"
-            style={{
-              color: 'var(--text)',
-              backgroundColor: 'var(--secondary)',
-              border: 'none',
-              resize: 'none',
-              fontFamily: 'inherit',
-              overflow: 'hidden',
-            }}
+            className="w-full text-text bg-secondary border-none resize-none font-inherit overflow-hidden"
           />
         ) : (
           <div className="whitespace-pre-wrap">{cleanLessonText(editedLesson)}</div>
         )}
       </Modal.Body>
-      <Modal.Footer style={{
-        backgroundColor: 'var(--primary)',
-      }}
-      >
+      <Modal.Footer className="bg-primary">
         {isEditing ? (
           <>
             <Button
-              variant="secondary"
               onClick={handleSaveClick}
-              style={{
-                backgroundColor: 'var(--button)',
-                color: 'var(--text)',
-              }}
+              className="px-2 bg-button hover:bg-button_hover text-white font-bold py-2 rounded-full transition-colors duration-300 ease-in-out"
             >
               Save
             </Button>
             <Button
-              variant="secondary"
               onClick={handleCancelClick}
-              style={{
-                backgroundColor: 'var(--button)',
-                color: 'var(--text)',
-              }}
+              className="px-2 bg-button hover:bg-button_hover text-white font-bold py-2 rounded-full transition-colors duration-300 ease-in-out"
             >
               Cancel
             </Button>
@@ -99,22 +73,14 @@ const LessonPopup = ({ lesson, open, handleClose, onUpdateLesson, editedLesson, 
         ) : (
           <>
             <Button
-              variant="secondary"
               onClick={handleEditClick}
-              style={{
-                backgroundColor: 'var(--button)',
-                color: 'var(--text)',
-              }}
+              className="px-2 bg-button hover:bg-button_hover text-white font-bold py-2 rounded-full transition-colors duration-300 ease-in-out"
             >
               Edit
             </Button>
             <Button
-              variant="secondary"
               onClick={handleClose}
-              style={{
-                backgroundColor: 'var(--button)',
-                color: 'var(--text)',
-              }}
+              className="px-2 bg-button hover:bg-button_hover text-white font-bold py-2 rounded-full transition-colors duration-300 ease-in-out"
             >
               Close
             </Button>

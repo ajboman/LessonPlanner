@@ -2,7 +2,7 @@ import React from 'react';
 
 const Info = () => {
   return (
-    <header className='w-full flex flex-col items-center justify-center py-12 px-6 text-center bg-gradient-to-r from-secondary to-accent text-text rounded-lg shadow-xl'>
+    <header className='w-full flex flex-col items-center justify-center py-12 px-6 text-center bg-gradient-to-r from-secondary to-primary text-text rounded-lg shadow-xl'>
       <h1 className='text-5xl font-bold mb-6'>
         Plan Lessons Quick and Easy
       </h1>

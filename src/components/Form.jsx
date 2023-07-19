@@ -222,11 +222,11 @@ const Form = ({ saveLesson }) => {
         ))}
         <Button
           type="submit"
-          className="mb-10 col-span-full bg-gradient-to-r from-accent to-primary text-white hover:from-primary hover:to-accent transition-all duration-500 ease-linear relative overflow-hidden"
+          className="mb-10 col-span-full bg-gradient-to-r from-secondary to-primary text-white hover:from-primary hover:to-secondary transition-all duration-500 ease-linear relative overflow-hidden"
         >
           {buttonText}
           <div
-            className="absolute inset-0 bg-gradient-to-r from-accent to-primary transform translate-x-full transition-transform duration-500 ease-linear"
+            className="absolute inset-0 bg-gradient-to-r from-secondary to-primary transform translate-x-full transition-transform duration-500 ease-linear"
             style={{ zIndex: -1 }}
           />
         </Button>

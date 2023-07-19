@@ -6,19 +6,19 @@
   Note: The styles for this gradient grid background is heavily inspired by the creator of this amazing site (https://dub.sh) – all credits go to them! 
 */
 :root {
-  --text: #1d004d;
-  --button: #8b81a2;
-  --button-hover: #7c7288;
-  --primary: #3c344e;
-  --secondary: #c5bad3;
-  --accent: #7f68b1;
-  --accent-hover: #9b78e6;
-  --text-dark: #ddd1ec; 
-  --button-dark: #3c344e; 
-  --button-hover-dark: #7f68b1;
-  --primary-dark: #14033d; 
-  --secondary-dark: #260a49; 
-  --accent-dark: #b9aadd; 
+  --text: #0e0025;
+  --button: #1c0f69;
+  --button-hover: #4c2dff;
+  --primary: #2d18a1;
+  --secondary: #ffffff;
+  --accent: #5b42eb;
+  --accent-hover: #4f32f1;
+  --text-dark: #f5f3f8; 
+  --button-dark: #130855; 
+  --button-hover-dark: #2c1997;
+  --primary-dark: #0a0030; 
+  --secondary-dark: #573ee2; 
+  --accent-dark: #d3c0ff; 
   --accent-hover-dark: #cbb3ff; 
 }
 
@@ -43,7 +43,7 @@
 }
 
 .main:before {
-  background: radial-gradient(circle, rgba(2, 0, 36, 0) 0, #675d7e 100%);
+  background: radial-gradient(circle, var(--secondary) 0, var(--accent) 100%);
   position: absolute;
   content: "";
   z-index: 2;
@@ -53,7 +53,7 @@
 }
 
 .dark .main:before {
-  background: radial-gradient(circle, var(--accent-dark) 0, var(--primary-dark) 100%);
+  background: radial-gradient(circle, var(--primary-dark) 0, var(--secondary-dark) 100%);
 }
 
 
