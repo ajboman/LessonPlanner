@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import UserContext from './services/UserContext';
 import { createUserDocument } from './services/Firestore';
 import { createLessonDocument, deleteLessonDocument, readAllUserLessons } from './services/Firestore';
@@ -16,12 +16,7 @@ import Profile from './components/Profile';
 import './App.css';
 
 const RedirectToPlan = () => {
-  const navigate = useNavigate();
-  useEffect(() => {
-    navigate('/plan');
-  }, [navigate]);
-
-  return null;
+  return <Navigate to="/plan" replace />
 }
 
 const App = () => {
